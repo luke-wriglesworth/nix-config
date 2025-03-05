@@ -1,7 +1,7 @@
-{ pkgs, self, ... }:
+{ pkgs, ... }:
 
 {
-  users.users.lukewriglesworth.home = /Users/lukewriglesworth;
+  users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
   environment.systemPackages = with pkgs; [ 
       neovim
       fastfetch

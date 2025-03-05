@@ -7,6 +7,11 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+    nix-wallpaper = {
+      url = "github:lunik1/nix-wallpaper";
+      # Make it use the same nixpkgs instance
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +25,6 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
     };
-    catppuccin.url = "github:catppuccin/nix";
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +37,7 @@
     };
   };
 
-  outputs = inputs@{nixpkgs, nix-darwin, nixpkgs-darwin, home-manager, plasma-manager, nixos-hardware, catppuccin, chaotic, ... }: 
+  outputs = inputs@{nixpkgs, nix-darwin, nixpkgs-darwin, home-manager, plasma-manager, nixos-hardware, chaotic, ... }: 
     {
     nixosConfigurations = {
       plasma = nixpkgs.lib.nixosSystem {
@@ -60,7 +64,6 @@
           ./config/configuration.nix 
           ./config/hyprland.nix
           chaotic.nixosModules.default
-          catppuccin.nixosModules.catppuccin
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
           home-manager.nixosModules.home-manager {

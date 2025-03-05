@@ -541,7 +541,7 @@
 
     # Import a theme from './themes/*.json'.
     # Default: ""
-    theme = "catppuccin_macchiato";
+    theme = "gruvbox";
 
     # Configure bar layouts for monitors.
     # See 'https://hyprpanel.com/configuration/panel.html'.

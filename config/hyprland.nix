@@ -1,6 +1,5 @@
 { inputs, pkgs, ... }:
 {
-
     environment.systemPackages = [
       pkgs.wl-clipboard
       pkgs.slurp
@@ -45,13 +44,11 @@
         };
         dconf.enable = true;
     };
+
     qt = {
         enable = true;
         platformTheme = "gnome";
         style = "adwaita-dark";
-    };
-    catppuccin = {
-        enable = true;
     };
 }
  

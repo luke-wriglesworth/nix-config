@@ -267,6 +267,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "video" "render" "docker" "openrazer" "podman" ];
+    home = "/home/luke";
    };
 
   programs = {
