@@ -4,8 +4,6 @@ let
 in
 {
   home.file = {};
-  home.username = if isLinux then "luke" else "lukewriglesworth";
-  home.homeDirectory = if isLinux then "/home/luke" else "/Users/lukewriglesworth";
   nixpkgs.config.allowUnfree = true;
   xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
@@ -30,7 +28,7 @@ in
       extraConfig = ''
       local config = wezterm.config_builder()
       config.font_size = 12.0
-      config.font = wezterm.font "Jetbrains Mono Nerd Font"
+      config.font = wezterm.font "JetbrainsMono Nerd Font"
       config.color_scheme = 'Gruvbox Dark (Gogh)'
       config.enable_wayland = false
       config.window_padding = {

@@ -5,6 +5,8 @@
                 ./home.nix 
                 inputs.hyprpanel.homeManagerModules.hyprpanel 
               ];
+    home.username = "luke";
+    home.homeDirectory = "/home/luke";
     home.stateVersion = "24.11";
     home.pointerCursor = {
       gtk.enable = true;
