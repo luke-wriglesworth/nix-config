@@ -1,16 +1,25 @@
-{ pkgs, ...}:
-let 
-  isLinux = pkgs.stdenv.isLinux;
-in
+{ pkgs, inputs, ...}:
+
 {
+  imports = [ inputs.nvchad4nix.homeManagerModule ];
+  #home.packages = [ inputs.nvchad4nix.packages."${pkgs.system}".nvchad ];
   home.file = {};
   nixpkgs.config.allowUnfree = true;
   xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
+
     home-manager.enable = true;
+
     starship = {
       enable = true;
       enableZshIntegration = true;
+    };
+
+    nvchad = {
+      enable = true;
+      extraPackages = with pkgs; [
+        nixd
+      ];
     };
 
     zsh = {
@@ -43,13 +52,14 @@ in
     };
     
     ghostty = {
-    enable = false;
-    enableZshIntegration = true;
-      settings = {
-        theme = "catppuccin-macchiato";
-        font-family = "UbuntuMono Nerd Font";
-        font-size = 14;
-      };
+      enable = false;
+      enableZshIntegration = true;
+        settings = {
+          theme = "catppuccin-macchiato";
+          font-family = "UbuntuMono Nerd Font";
+          font-size = 14;
+        };
     };
+
   };
 }

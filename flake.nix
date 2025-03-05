@@ -9,7 +9,6 @@
     };
     nix-wallpaper = {
       url = "github:lunik1/nix-wallpaper";
-      # Make it use the same nixpkgs instance
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -34,6 +33,10 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     hyprpanel = {
       url = "github:Jas-SinghFSU/HyprPanel";
+    };
+    nvchad4nix = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

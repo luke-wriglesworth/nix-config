@@ -80,7 +80,6 @@
     unzip
     nh
     zotero
-    neovim
     wget
     openrgb-with-all-plugins
     vlc
