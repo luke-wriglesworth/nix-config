@@ -2,6 +2,11 @@
   description = "Luke's NixOS configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,15 +33,11 @@
     };
   };
 
-  outputs = inputs@{nixpkgs, home-manager, plasma-manager, nixos-hardware, catppuccin, chaotic, ... }: 
-    let
-      username = "luke";
-      system = "x86_64-linux";
-    in
+  outputs = inputs@{nixpkgs, nix-darwin, nixpkgs-darwin, home-manager, plasma-manager, nixos-hardware, catppuccin, chaotic, ... }: 
     {
     nixosConfigurations = {
       plasma = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./config/configuration.nix
@@ -48,12 +49,12 @@
             home-manager.useUserPackages = true;
 	          home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
             home-manager.backupFileExtension = "backup";
-            home-manager.users."${username}" = import ./home/plasma.nix;
+            home-manager.users."luke" = import ./home/plasma.nix;
           }
         ];
       };
       hyprland = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [ 
           ./config/configuration.nix 
@@ -66,7 +67,24 @@
             #home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.users."${username}" = import ./home/hyprland.nix;
+            home-manager.users."luke" = import ./home/hyprland.nix;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
+      };
+    };
+    # macbook pro
+    darwinConfigurations = {
+      darwin = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
+        modules = [ 
+          ./config/darwin.nix 
+          home-manager.darwinModules.home-manager {
+            #home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.users."lukewriglesworth" = import ./home/darwin.nix;
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
         ];

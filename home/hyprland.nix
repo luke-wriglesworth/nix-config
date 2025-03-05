@@ -5,8 +5,26 @@
                 ./home.nix 
                 inputs.hyprpanel.homeManagerModules.hyprpanel 
               ];
-    
-    nixpkgs.config.allowUnfree = true;
+    home.stateVersion = "24.11";
+    home.pointerCursor = {
+      gtk.enable = true;
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+      size = 28;
+    };
+    gtk = {
+      enable = true;
+      theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
+      };
+      cursorTheme = {
+        name = "Adwaita";
+        size = 28;
+        package = pkgs.gnome-themes-extra;
+      };
+    };
+
     services.cliphist.enable = true;
     services.hyprpaper = {
       enable = true;

@@ -2,6 +2,27 @@
 
 {
   imports = [ ./home.nix ];  
+  home.stateVersion = "24.11";
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 28;
+  };
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      size = 28;
+      package = pkgs.gnome-themes-extra;
+    };
+  };
+
+
   programs.plasma = {
     enable = true;
     overrideConfig = false;

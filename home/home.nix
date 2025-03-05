@@ -1,27 +1,12 @@
 { pkgs, ...}:
+let 
+  isLinux = pkgs.stdenv.isLinux;
+in
 {
-  home.username = "luke";
-  home.homeDirectory = "/home/luke";
-  home.stateVersion = "24.11";
   home.file = {};
-  home.pointerCursor = {
-    gtk.enable = true;
-    name = "Adwaita";
-    package = pkgs.adwaita-icon-theme;
-    size = 28;
-};
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-    cursorTheme = {
-      name = "Adwaita";
-      size = 28;
-      package = pkgs.gnome-themes-extra;
-    };
-  };
+  home.username = if isLinux then "luke" else "lukewriglesworth";
+  home.homeDirectory = if isLinux then /home/luke else /Users/lukewriglesworth;
+  nixpkgs.config.allowUnfree = true;
   programs = {
     home-manager.enable = true;
     zsh = {
@@ -37,7 +22,6 @@
       initExtra = ''
       autoload -U promptinit; promptinit
       prompt pure
-      ${pkgs.nitch}/bin/nitch
       '';
     };
 
@@ -62,7 +46,7 @@
     };
     
     ghostty = {
-    enable = true;
+    enable = false;
     enableZshIntegration = true;
       settings = {
         theme = "catppuccin-macchiato";
