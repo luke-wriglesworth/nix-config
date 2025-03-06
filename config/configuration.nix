@@ -1,7 +1,6 @@
 { pkgs, inputs, lib, ...}:
 
 {
-
   imports = [ ./hardware-configuration.nix ];
   chaotic = {
     nyx.overlay.enable = true;
@@ -149,8 +148,11 @@
   };
 
   services = {
-    scx.enable = false;
-    scx.package = pkgs.scx_git.full;
+    tailscale = {
+      enable = true;
+      useRoutingFeatures = "both";
+      extraSetFlags = [ "--advertise-exit-node" "--ssh=true" ];
+    };
     greetd = {
       enable = true;
       settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet";
@@ -180,21 +182,14 @@
       enable = true;
       ports = [ 22 ];
       settings = {
-        PasswordAuthentication = true;
+        UsePAM = true;
         AllowUsers = [ "luke" ];
         UseDns = true;
-        PermitRootLogin = "yes";
+        PermitRootLogin = "no";
+        PrintMotd = true;
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
-    };
-    syncthing = {
-      enable = true;
-      openDefaultPorts = true;
-      user = "luke";
-      configDir = "/home/luke/.config/syncthing";
-        settings.gui = {
-          user = "luke";
-          password = "syncpass";
-        };
     };
     pipewire = {
       enable = true;
@@ -281,9 +276,6 @@
     steam = {
       enable = true;
       gamescopeSession.enable = true;
-      gamescopeSession.args = [ "-H 1440" "-W 2560" "-r 165" 
-                                "--mangoapp" "--hdr-enabled" 
-                                "--adaptive-sync" "--hdr-sdr-content-nits 500" "-e" ];
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true; 
       localNetworkGameTransfers.openFirewall = true; 

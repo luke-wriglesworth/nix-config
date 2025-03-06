@@ -1,15 +1,13 @@
 { pkgs, inputs, ...}:
 
+# Configs common between all machines
 {
   imports = [ inputs.nvchad4nix.homeManagerModule ];
-  #home.packages = [ inputs.nvchad4nix.packages."${pkgs.system}".nvchad ];
   home.file = {};
   nixpkgs.config.allowUnfree = true;
   xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
-
     home-manager.enable = true;
-
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -50,16 +48,5 @@
       return config
       '';
     };
-    
-    ghostty = {
-      enable = false;
-      enableZshIntegration = true;
-        settings = {
-          theme = "catppuccin-macchiato";
-          font-family = "UbuntuMono Nerd Font";
-          font-size = 14;
-        };
-    };
-
   };
 }

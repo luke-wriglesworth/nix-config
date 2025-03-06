@@ -4,7 +4,7 @@
     imports = [
                 ./home.nix 
                 inputs.hyprpanel.homeManagerModules.hyprpanel 
-              ];
+              ];          
     home.username = "luke";
     home.homeDirectory = "/home/luke";
     home.stateVersion = "24.11";
@@ -242,255 +242,7 @@
         ];
       };
     };
-    programs.waybar = {
-      enable = false;
-      systemd.enable = true;
-      settings = [
-        {
-          layer = "top";
-          position = "top";
-          modules-left = ["hyprland/workspaces"];
-          modules-center = ["hyprland/window"];
-          modules-right = ["custom/notifications" "clock" "tray" "pulseaudio" "custom/lock" "custom/power"];
 
-          "hyprland/workspaces" = {
-            disable-scroll = true;
-            sort-by-name = false;
-            all-outputs = true;
-            persistent-workspaces = {
-              "Home" = [];
-              "2" = [];
-              "3" = [];
-              "4" = [];
-              "5" = [];
-              "6" = [];
-              "7" = [];
-              "8" = [];
-              "9" = [];
-              "0" = [];
-            };
-          };
-
-          "tray" = {
-            icon-size = 21;
-            spacing = 10;
-          };
-
-          "clock" = {
-            timezone = "Eastern/Toronto";
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            format-alt = "  {:%d/%m/%Y}";
-            format = "  {:%H:%M}";
-          };
-
-          "network" = {
-            format-wifi = "{icon} ({signalStrength}%)  ";
-            format-ethernet = "{ifname}: {ipaddr}/{cidr} 󰈀 ";
-            format-linked = "{ifname} (No IP) 󰌘 ";
-            format-disc = "Disconnected 󰟦 ";
-            format-alt = "{ifname}: {ipaddr}/{cidr}";
-          };
-
-          "backlight" = {
-            device = "intel_backlight";
-            format = "{icon}";
-            format-icons = ["" "" "" "" "" "" "" "" ""];
-          };
-          
-          "pulseaudio" = {
-            format = "{icon} {volume}% {format_source}";
-            format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
-            format-muted = " {format_source}";
-            format-source = " {volume}%";
-            format-source-muted = "";
-            format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = [
-                ""
-                ""
-                ""
-              ];
-            };
-            on-click = "pavucontrol";
-          };
-
-
-          "battery" = {
-            states = {
-              warning = 30;
-              critical = 15;
-            };
-            format = "{icon}";
-            format-charging = "󰂄";
-            format-plugged = "󱟢";
-            format-alt = "{icon}";
-            format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-          };
-
-          ## https://github.com/Frost-Phoenix/nixos-config/blob/4d75ca005a820672a43db9db66949bd33f8fbe9c/modules/home/waybar/settings.nix#L116
-          "custom/notifications" = {
-            tooltip = false;
-            format = "{icon} Notifications";
-            format-icons = {
-              notification = "󱥁 <span foreground='red'><sup></sup></span>";
-              none = "󰍥 ";
-              dnd-notification = "󱙍 <span foreground='red'><sup></sup></span>";
-              dnd-none = "󱙎 ";
-              inhibited-notification = "󱥁 <span foreground='red'><sup></sup></span>";
-              inhibited-none = "󰍥 ";
-              dnd-inhibited-notification = "󱙍 <span foreground='red'><sup></sup></span>";
-              dnd-inhibited-none = "󱙎 ";
-            };
-            return-type = "json";
-            exec-if = "which swaync-client";
-            exec = "swaync-client -swb";
-            on-click = "swaync-client -t -sw";
-            on-click-right = "swaync-client -d -sw";
-            escape = true;
-          };
-          
-
-          "custom/lock" = {
-            tooltip = false;
-            on-click = "${pkgs.hyprlock}/bin/hyprlock";
-            format = " ";
-          };
-
-          "custom/power" = {
-            tooltip = false;
-            on-click = "${pkgs.wlogout}/bin/wlogout &";
-            format = " ";
-          };
-        }
-      ];
-
-      style = ''
-        * {
-          font-family: 'Ubuntu Nerd Font';
-          font-size: 13px;
-          min-height: 0;
-        }
-
-        #waybar {
-          background: transparent;
-          color: @text;
-          margin: 5px 5px;
-        }
-
-        #workspaces {
-          border-radius: 1rem;
-          margin: 5px;
-          background-color: @surface0;
-          margin-left: 1rem;
-        }
-
-        #workspaces button {
-          color: @lavender;
-          border-radius: 1rem;
-          padding: 0.4rem;
-        }
-
-        #workspaces button.active {
-          color: @peach;
-          border-radius: 1rem;
-        }
-
-        #workspaces button:hover {
-          color: @peach;
-          border-radius: 1rem;
-        }
-
-        #custom-music,
-        #tray,
-        #backlight,
-        #network,
-        #clock,
-        #battery,
-        #custom-lock,
-        #custom-notifications,
-        #custom-power {
-          background-color: @surface0;
-          padding: 0.5rem 1rem;
-          margin: 5px 0;
-        }
-
-        #clock {
-          color: @blue;
-          border-radius: 1rem 1rem 1rem 1rem;
-          margin-right: 1rem;
-        }
-
-        #pulseaudio {
-          color: @blue;
-          border-radius: 1rem 1rem 1rem 1rem;
-          margin-right: 1rem;
-        }
-
-        #battery {
-          color: @green;
-        }
-
-        #custom-notifications {
-          border-radius: 1rem;
-          margin-right: 1rem;
-          color: @peach;
-        }
-
-        #custom-music {
-          color: @mauve;
-          border-radius: 1rem;
-        }
-
-        #custom-lock {
-            border-radius: 1rem 0px 0px 1rem;
-            color: @lavender;
-        }
-
-        #custom-power {
-            margin-right: 1rem;
-            border-radius: 0px 1rem 1rem 0px;
-            color: @red;
-        }
-
-        #tray {
-          margin-right: 1rem;
-          border-radius: 1rem;
-        }
-
-        @define-color rosewater #f4dbd6;
-        @define-color flamingo #f0c6c6;
-        @define-color pink #f5bde6;
-        @define-color mauve #c6a0f6;
-        @define-color red #ed8796;
-        @define-color maroon #ee99a0;
-        @define-color peach #f5a97f;
-        @define-color yellow #eed49f;
-        @define-color green #a6da95;
-        @define-color teal #8bd5ca;
-        @define-color sky #91d7e3;
-        @define-color sapphire #7dc4e4;
-        @define-color blue #8aadf4;
-        @define-color lavender #b7bdf8;
-        @define-color text #cad3f5;
-        @define-color subtext1 #b8c0e0;
-        @define-color subtext0 #a5adcb;
-        @define-color overlay2 #939ab7;
-        @define-color overlay1 #8087a2;
-        @define-color overlay0 #6e738d;
-        @define-color surface2 #5b6078;
-        @define-color surface1 #494d64;
-        @define-color surface0 #363a4f;
-        @define-color base #24273a;
-        @define-color mantle #1e2030;
-        @define-color crust #181926;
-      '';
-    };
     programs.fuzzel = {
       enable = true;
       settings = {
@@ -519,80 +271,42 @@
         };
       };
   };
-  programs.hyprpanel = {
-
-    # Enable the module.
-    # Default: false
-    enable = true;
-    overlay.enable = true;
-
-    # Automatically restart HyprPanel with systemd.
-    # Useful when updating your config so that you
-    # don't need to manually restart it.
-    # Default: false
-
-    # Add '/nix/store/.../hyprpanel' to your
-    # Hyprland config 'exec-once'.
-    # Default: false
-    hyprland.enable = true;
-
-    # Fix the overwrite issue with HyprPanel.
-    # See below for more information.
-    # Default: false
-    overwrite.enable = true;
-
-    # Import a theme from './themes/*.json'.
-    # Default: ""
-    theme = "gruvbox";
-
-    # Configure bar layouts for monitors.
-    # See 'https://hyprpanel.com/configuration/panel.html'.
-    # Default: null
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          left = [ "dashboard" "workspaces" "windowtitle"];
-          middle = [ "media" "cava"];
-          right = [ "volume"  "cpu" "ram" "systray" "bluetooth" "clock" "notifications" ];
+    programs.hyprpanel = {
+      enable = true;
+      overlay.enable = true;
+      hyprland.enable = true;
+      overwrite.enable = true;
+      theme = "gruvbox";
+      layout = {
+        "bar.layouts" = {
+          "0" = {
+            left = [ "dashboard" "workspaces" "windowtitle"];
+            middle = [ "media" "cava"];
+            right = [ "volume"  "cpu" "ram" "systray" "bluetooth" "clock" "notifications" ];
+          };
+        };
+      };
+      settings = {
+        bar.launcher.autoDetectIcon = true;
+        bar.workspaces.show_icons = true;
+        bar.workspaces.show_numbered = true;
+        bar.workspaces.workspaces = 10;
+        bar.workspaces.numbered_active_indicator = "underline";
+        menus.clock = {
+          time = {
+            military = true;
+            hideSeconds = true;
+          };
+          weather.unit = "metric";
+        };
+        menus.dashboard.directories.enabled = false;
+        menus.dashboard.stats.enable_gpu = false;
+        menus.dashboard.shortcuts.enabled = false;
+        theme.bar = {
+          transparent = false;
+          scaling = 80;
+          outer_spacing = "1.0em";
         };
       };
     };
-     
-
-    # Configure and theme almost all options from the GUI.
-    # Options that require '{}' or '[]' are not yet implemented,
-    # except for the layout above.
-    # See 'https://hyprpanel.com/configuration/settings.html'.
-    # Default: <same as gui>
-    settings = {
-      bar.launcher.autoDetectIcon = true;
-      bar.workspaces.show_icons = true;
-      bar.workspaces.show_numbered = true;
-      bar.workspaces.workspaces = 10;
-      bar.workspaces.numbered_active_indicator = "underline";
-
-      menus.clock = {
-        time = {
-          military = true;
-          hideSeconds = true;
-        };
-        weather.unit = "metric";
-      };
-
-      menus.dashboard.directories.enabled = false;
-      menus.dashboard.stats.enable_gpu = false;
-      menus.dashboard.shortcuts.enabled = false;
-
-      theme.bar = {
-        transparent = false;
-        scaling = 80;
-        outer_spacing = "1.0em";
-      };
-
-      # theme.font = {
-      #   name = "CaskaydiaCove NF";
-      #   size = "16px";
-      # };
-    };
-  };
 }
