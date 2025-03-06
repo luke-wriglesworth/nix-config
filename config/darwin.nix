@@ -2,7 +2,11 @@
 
 {
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
-
+  nix.settings.experimental-features = "nix-command flakes";
+  nix.enable = false;
+  system.stateVersion = 6;
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true;
   fonts = {
     packages = with pkgs; [
       ibm-plex
@@ -54,9 +58,4 @@
         upgrade = true;
       };
     };
-    nix.settings.experimental-features = "nix-command flakes";
-    nix.enable = false;
-    system.stateVersion = 6;
-    nixpkgs.hostPlatform = "aarch64-darwin";
-    nixpkgs.config.allowUnfree = true;
 }
