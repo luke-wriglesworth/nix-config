@@ -8,6 +8,12 @@
   xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
     home-manager.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+    
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -38,6 +44,7 @@
       config.font = wezterm.font "JetbrainsMono Nerd Font"
       config.color_scheme = 'Gruvbox Dark (Gogh)'
       config.enable_wayland = false
+      config.audible_bell = "Disabled"
       config.window_padding = {
         left = '1cell',
         right = '1cell',

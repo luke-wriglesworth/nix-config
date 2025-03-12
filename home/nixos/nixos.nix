@@ -1,13 +1,7 @@
 { pkgs, inputs, ... }:
 
 {
-    imports = [
-                ./home.nix 
-                inputs.hyprpanel.homeManagerModules.hyprpanel 
-              ];          
-    home.username = "luke";
-    home.homeDirectory = "/home/luke";
-    home.stateVersion = "24.11";
+    imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];          
     home.pointerCursor = {
       gtk.enable = true;
       name = "Adwaita";
@@ -24,6 +18,14 @@
         name = "Adwaita";
         size = 28;
         package = pkgs.gnome-themes-extra;
+      };
+    };
+
+    dconf = {
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+        };
       };
     };
 
@@ -147,12 +149,12 @@
 
         bind = [
           # General
-          "$mod, q, exec, $terminal"
+          "$mod, q, exec, uwsm app -- $terminal"
           "$mod, c, killactive"
-          "$mod, e, exec, ${pkgs.xfce.thunar}/bin/thunar"
-          "$mod, b, exec, zen"
+          "$mod, e, exec, uwsm app -- ${pkgs.xfce.thunar}/bin/thunar"
+          "$mod, b, exec, uwsm app -- zen"
           "$mod SHIFT, e, exit"
-          "$mod SHIFT, l, exec, ${pkgs.hyprlock}/bin/hyprlock"
+          "$mod SHIFT, l, exec, uwsm app -- ${pkgs.hyprlock}/bin/hyprlock"
 
           # Screen focus
           "$mod, v, togglefloating"
@@ -197,7 +199,7 @@
           "$mod, j, movefocus, d"
 
           # Applications
-          "$mod, r, exec, pkill fuzzel || ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
+          "$mod, r, exec, pkill fuzzel || uwsm app -- ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
 
           # Clipboard
           "$mod ALT, v, exec, pkill fuzzel || cliphist list | fuzzel --no-fuzzy --dmenu | cliphist decode | wl-copy"

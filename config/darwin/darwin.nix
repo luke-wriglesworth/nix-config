@@ -3,7 +3,7 @@
 {
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
   nix.settings.experimental-features = "nix-command flakes";
-  nix.enable = false;
+  nix.enable = true;
   system.stateVersion = 6;
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;

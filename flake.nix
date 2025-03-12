@@ -31,43 +31,60 @@
     };
   };
 
-  outputs = inputs@{nixpkgs, nix-darwin, home-manager, nixos-hardware, chaotic, ... }: 
-    {
+  outputs = inputs@{nixpkgs, nix-darwin, nixos-hardware, chaotic, ... }: {
+    # System Configurations
     nixosConfigurations = {
-      # amd64 nixos
-      hyprland = nixpkgs.lib.nixosSystem {
+      nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
-        modules = [ 
-          ./config/configuration.nix 
-          ./config/hyprland.nix
+        modules = [
+          ./config/nixos/configuration.nix
+          ./config/nixos/hyprland.nix
+          ./config/nixos/hardware-configuration.nix
           chaotic.nixosModules.default
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
-          home-manager.nixosModules.home-manager {
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users."luke" = import ./home/hyprland.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
         ];
       };
     };
     darwinConfigurations = {
-      # aarch64 nix-darwin
       darwin = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
-        modules = [ 
-          ./config/darwin.nix 
-          home-manager.darwinModules.home-manager {
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users."lukewriglesworth" = import ./home/darwin.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
+        modules = [
+          ./config/darwin/darwin.nix 
         ];
       };
     };
-  };
+
+    # Home Manager
+    homeConfigurations = {
+      "luke@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          {
+            home.username = "luke";
+            home.homeDirectory = "/home/luke";
+            home.stateVersion = "24.11";
+          }
+          ./home/common/home.nix
+          ./home/nixos/nixos.nix
+        ];
+      };
+      "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { system = "aarch64-darwin"; };
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ 
+            {
+              home.username = "lukewriglesworth";
+              home.homeDirectory = "/Users/lukewriglesworth";
+              home.stateVersion = "25.05";
+            }
+            ./home/common/home.nix
+            ./home/darwin/darwin.nix
+          ];
+      };
+    }; 
+  }; 
 }

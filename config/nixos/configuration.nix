@@ -1,17 +1,16 @@
 { pkgs, inputs, lib, ...}:
 
+let
+  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in 
 {
-  imports = [ ./hardware-configuration.nix ];
   chaotic = {
     nyx.overlay.enable = true;
-    mesa-git.enable = true;
-    mesa-git.extraPackages = [ pkgs.mesa_git.opencl ];
-    mesa-git.extraPackages32 = [ pkgs.mesa32_git.opencl ];
   };
   system.stateVersion = "24.11";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-rc;
+    kernelPackages = pkgs.linuxPackages_cachyos;
     kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -62,7 +61,11 @@
   };
 
   environment.systemPackages = with pkgs; [
+    unityhub
     gitkraken
+    lutris
+    evince
+    element-desktop
     gh
     gh-copilot
     libreoffice
@@ -85,7 +88,6 @@
     udiskie
     git
     btop
-    direnv
     qbittorrent
     vlc
     mesa-demos
@@ -101,12 +103,13 @@
     jellyfin-web
     jellyfin-ffmpeg
     jellyfin-media-player
-    vesktop
+    discord
     nixd
     nix-index
     distrobox_git
     alejandra
-  ] ++ [ inputs.zen-browser.packages."${system}".twilight-official ];
+    podman-tui
+  ] ++ [ inputs.zen-browser.packages."${system}".twilight ];
   
   environment.sessionVariables = {
     EDITOR = "nvim";
@@ -129,21 +132,21 @@
 
   # stop kernel log spam from covering greeter
   systemd.services.greetd.serviceConfig = {
-  Type = "idle";
-  StandardInput = "tty";
-  StandardOutput = "tty";
-  StandardError = "journal";
-  TTYReset = true;
-  TTYVHangup = true;
-  TTYVTDisallocate = true;
-};
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal";
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 
   virtualisation = {
-    docker.enable = false;
-    waydroid.enable = false;
+    containers.enable = true;
     podman = {
       enable = true;
       dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
   };
 
@@ -250,10 +253,12 @@
     graphics = {
       enable = true;
       enable32Bit= true;
+      package = hyprland-pkgs.mesa.drivers;
+      package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;
-    openrazer.enable = false;
+    openrazer.enable = true;
   };
   
   # User Account
