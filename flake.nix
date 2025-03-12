@@ -48,7 +48,7 @@
       };
     };
     darwinConfigurations = {
-      darwin = nix-darwin.lib.darwinSystem {
+      Lukes-MacBook-Pro = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
         modules = [
@@ -72,7 +72,7 @@
           ./home/nixos/nixos.nix
         ];
       };
-      "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
+      "luke@darwin" = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { system = "aarch64-darwin"; };
           extraSpecialArgs = { inherit inputs; };
           modules = [ 
