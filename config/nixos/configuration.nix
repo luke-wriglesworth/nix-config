@@ -1,31 +1,31 @@
-{ pkgs, inputs, lib, ...}:
-
-let
-  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in 
 {
-  chaotic = {
-    nyx.overlay.enable = true;
-  };
+  pkgs,
+  inputs,
+  lib,
+  ...
+}: let
+  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   system.stateVersion = "24.11";
 
+  chaotic.mesa-git.enable = true;
   boot = {
     kernelPackages = pkgs.linuxPackages_cachyos;
-    kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+    kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
     loader.systemd-boot.memtest86.enable = true;
     loader.systemd-boot.configurationLimit = 10;
     loader.efi.canTouchEfiVariables = true;
     kernel.sysctl = {
-    "fs.inotify.max_user_watches"   = 1048576;   # default:  8192
-    "fs.inotify.max_user_instances" =    1024;   # default:   128
-    "fs.inotify.max_queued_events"  =   32768;   # default: 16384
+      "fs.inotify.max_user_watches" = 1048576; # default:  8192
+      "fs.inotify.max_user_instances" = 1024; # default:   128
+      "fs.inotify.max_queued_events" = 32768; # default: 16384
     };
   };
 
   nix = {
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     package = pkgs.nixVersions.latest;
     gc = {
       automatic = false;
@@ -36,9 +36,9 @@ in
       cores = 24;
       max-jobs = 24;
       auto-optimise-store = false;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "luke" ];
-      system-features = [ "benchmark" "big-parallel" "kvm" "nixos-test" "gccarch-znver4" "gccarch-native"];
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "luke"];
+      system-features = ["benchmark" "big-parallel" "kvm" "nixos-test" "gccarch-znver4" "gccarch-native"];
     };
   };
 
@@ -56,61 +56,63 @@ in
     firewall.enable = false;
     networkmanager.enable = false;
     dhcpcd.enable = true;
-    dhcpcd.extraConfig = '' nohook resolv.conf'';
+    dhcpcd.extraConfig = ''nohook resolv.conf'';
     enableIPv6 = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    unityhub
-    gitkraken
-    lutris
-    evince
-    element-desktop
-    gh
-    gh-copilot
-    libreoffice
-    lmstudio
-    texlive.combined.scheme-full
-    clinfo
-    amdgpu_top
-    en-croissant
-    stockfish
-    adwaita-icon-theme
-    papirus-icon-theme
-    mangohud
-    mangojuice
-    unzip
-    nh
-    zotero
-    wget
-    openrgb-with-all-plugins
-    vlc
-    udiskie
-    git
-    btop
-    qbittorrent
-    vlc
-    mesa-demos
-    vulkan-tools
-    thunderbird
-    cacert
-    nss
-    lact
-    openrazer-daemon
-    polychromatic
-    vscode-fhs
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
-    jellyfin-media-player
-    discord
-    nixd
-    nix-index
-    distrobox_git
-    alejandra
-    podman-tui
-  ] ++ [ inputs.zen-browser.packages."${system}".twilight ];
-  
+  environment.systemPackages = with pkgs;
+    [
+      unityhub
+      gitkraken
+      lutris
+      evince
+      element-desktop
+      gh
+      gh-copilot
+      libreoffice
+      lmstudio
+      texlive.combined.scheme-full
+      clinfo
+      amdgpu_top
+      en-croissant
+      stockfish
+      adwaita-icon-theme
+      papirus-icon-theme
+      mangohud
+      mangojuice
+      unzip
+      nh
+      zotero
+      wget
+      openrgb-with-all-plugins
+      vlc
+      udiskie
+      git
+      btop
+      qbittorrent
+      vlc
+      mesa-demos
+      vulkan-tools
+      thunderbird
+      cacert
+      nss
+      lact
+      openrazer-daemon
+      polychromatic
+      vscode-fhs
+      jellyfin
+      jellyfin-web
+      jellyfin-ffmpeg
+      jellyfin-media-player
+      discord
+      nixd
+      nix-index
+      distrobox_git
+      alejandra
+      podman-tui
+    ]
+    ++ [inputs.zen-browser.packages."${system}".twilight];
+
   environment.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "zen";
@@ -154,7 +156,7 @@ in
     tailscale = {
       enable = true;
       useRoutingFeatures = "both";
-      extraSetFlags = [ "--advertise-exit-node" "--ssh=true" ];
+      extraSetFlags = ["--advertise-exit-node" "--ssh=true"];
     };
     greetd = {
       enable = true;
@@ -171,7 +173,7 @@ in
       rocmOverrideGfx = "10.3.1";
     };
     fwupd.enable = true;
-    udev.extraRules = '' SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
+    udev.extraRules = ''SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
     udisks2.enable = true;
     open-webui = {
       enable = true;
@@ -183,10 +185,10 @@ in
     };
     openssh = {
       enable = true;
-      ports = [ 22 ];
+      ports = [22];
       settings = {
         UsePAM = true;
-        AllowUsers = [ "luke" ];
+        AllowUsers = ["luke"];
         UseDns = true;
         PermitRootLogin = "no";
         PrintMotd = true;
@@ -200,11 +202,10 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       jack.enable = true;
-      extraConfig.pipewire = 
-      {
+      extraConfig.pipewire = {
         "10-clock-rate" = {
           "context.properties" = {
-            "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
+            "default.clock.allowed-rates" = [44100 48000 88200 96000 176400 192000];
           };
         };
       };
@@ -224,24 +225,33 @@ in
   fonts = {
     fontconfig = {
       enable = true;
-      defaultFonts.serif = [ "IBM Plex Serif"];
-      defaultFonts.sansSerif = [ "IBM Plex Sans "];
-      defaultFonts.monospace = [ "JetBrains Mono" ];
+      defaultFonts.serif = ["IBM Plex Serif"];
+      defaultFonts.sansSerif = ["IBM Plex Sans "];
+      defaultFonts.monospace = ["JetBrains Mono"];
       subpixel.rgba = "rgb";
       hinting.enable = true;
       hinting.style = "full";
     };
-    packages = with pkgs; [
-      ibm-plex
-      jetbrains-mono
-    ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+    packages = with pkgs;
+      [
+        ibm-plex
+        jetbrains-mono
+      ]
+      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   };
 
   security = {
     polkit.enable = true;
-    pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
+    pki.certificateFiles = ["${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"];
     rtkit.enable = true;
-    pam.loginLimits = [{ domain = "*"; type = "-"; item = "memlock"; value = "unlimited"; }];
+    pam.loginLimits = [
+      {
+        domain = "*";
+        type = "-";
+        item = "memlock";
+        value = "unlimited";
+      }
+    ];
   };
 
   hardware = {
@@ -252,7 +262,7 @@ in
     };
     graphics = {
       enable = true;
-      enable32Bit= true;
+      enable32Bit = true;
       package = hyprland-pkgs.mesa.drivers;
       package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
     };
@@ -260,19 +270,19 @@ in
     amdgpu.opencl.enable = true;
     openrazer.enable = true;
   };
-  
+
   # User Account
   users.users.luke = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "video" "render" "docker" "openrazer" "podman" ];
+    extraGroups = ["wheel" "video" "render" "docker" "openrazer" "podman"];
     home = "/home/luke";
-   };
+  };
 
   programs = {
     nix-ld.enable = true;
     zsh.enable = true;
-    appimage.enable=true;
+    appimage.enable = true;
     gamescope = {
       enable = true;
       capSysNice = true;
@@ -282,8 +292,8 @@ in
       enable = true;
       gamescopeSession.enable = true;
       remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true; 
-      localNetworkGameTransfers.openFirewall = true; 
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
     };
   };
 }

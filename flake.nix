@@ -25,18 +25,24 @@
     hyprpanel = {
       url = "github:Jas-SinghFSU/HyprPanel";
     };
-    nvchad4nix = {
-      url = "github:nix-community/nix4nvchad";
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{nixpkgs, nix-darwin, nixos-hardware, chaotic, ... }: {
+  outputs = inputs @ {
+    nixpkgs,
+    nix-darwin,
+    nixos-hardware,
+    chaotic,
+    ...
+  }: {
     # System Configurations
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
         modules = [
           ./config/nixos/configuration.nix
           ./config/nixos/hyprland.nix
@@ -50,9 +56,9 @@
     darwinConfigurations = {
       Lukes-MacBook-Pro = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
         modules = [
-          ./config/darwin/darwin.nix 
+          ./config/darwin/darwin.nix
         ];
       };
     };
@@ -60,8 +66,8 @@
     # Home Manager
     homeConfigurations = {
       "luke@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-        extraSpecialArgs = { inherit inputs; };
+        pkgs = import nixpkgs {system = "x86_64-linux";};
+        extraSpecialArgs = {inherit inputs;};
         modules = [
           {
             home.username = "luke";
@@ -73,18 +79,18 @@
         ];
       };
       "luke@darwin" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { system = "aarch64-darwin"; };
-          extraSpecialArgs = { inherit inputs; };
-          modules = [ 
-            {
-              home.username = "lukewriglesworth";
-              home.homeDirectory = "/Users/lukewriglesworth";
-              home.stateVersion = "25.05";
-            }
-            ./home/common/home.nix
-            ./home/darwin/darwin.nix
-          ];
+        pkgs = import nixpkgs {system = "aarch64-darwin";};
+        extraSpecialArgs = {inherit inputs;};
+        modules = [
+          {
+            home.username = "lukewriglesworth";
+            home.homeDirectory = "/Users/lukewriglesworth";
+            home.stateVersion = "25.05";
+          }
+          ./home/common/home.nix
+          ./home/darwin/darwin.nix
+        ];
       };
-    }; 
-  }; 
+    };
+  };
 }
