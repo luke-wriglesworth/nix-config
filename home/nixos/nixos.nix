@@ -31,7 +31,11 @@
     };
   };
 
-  services.cliphist.enable = true;
+  services.cliphist = {
+    enable = true;
+    allowImages = true;
+    systemdTargets = "hyprland-session.target";
+  };
   services.hyprpaper = {
     enable = true;
     settings = {
@@ -44,6 +48,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = true;
     package = null;
     portalPackage = null;
     settings = {
@@ -59,8 +64,8 @@
       };
 
       general = {
-        gaps_in = 10;
-        gaps_out = 10;
+        gaps_in = 7;
+        gaps_out = 7;
         border_size = 2;
         layout = "dwindle";
         allow_tearing = true;
@@ -77,17 +82,23 @@
       };
 
       decoration = {
-        rounding = 15;
+        rounding = 20;
         active_opacity = 0.9;
         inactive_opacity = 0.8;
-        fullscreen_opacity = 0.9;
+        fullscreen_opacity = 1.0;
+
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+        };
 
         blur = {
           enabled = true;
           xray = true;
           special = false;
           new_optimizations = true;
-          size = 14;
+          size = 7;
           passes = 4;
           brightness = 1;
           noise = 0.01;
@@ -115,18 +126,18 @@
           "easeOutExpo, 0.16, 1, 0.3, 1"
           "softAcDecel, 0.26, 0.26, 0.15, 1"
           "md2, 0.4, 0, 0.2, 1"
+          "myBezier, 0.10, 0.9, 0.1, 1.05"
         ];
         animation = [
-          "windows, 1, 3, md3_decel, popin 60%"
-          "windowsIn, 1, 3, md3_decel, popin 60%"
-          "windowsOut, 1, 3, md3_accel, popin 60%"
+          "windows, 1, 4, myBezier, slide"
+          "windowsOut, 1, 4, myBezier, slide"
           "border, 1, 10, default"
-          "fade, 1, 3, md3_decel"
+          "fade, 1, 7, md3_decel"
           "layersIn, 1, 3, menu_decel, slide"
           "layersOut, 1, 1.6, menu_accel"
           "fadeLayersIn, 1, 2, menu_decel"
           "fadeLayersOut, 1, 4.5, menu_accel"
-          "workspaces, 1, 7, menu_decel, slide"
+          "workspaces, 1, 4, default"
           "specialWorkspace, 1, 3, md3_decel, slidevert"
         ];
       };

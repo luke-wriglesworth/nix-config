@@ -39,7 +39,7 @@
         config.font_size = 12.0
         config.font = wezterm.font "JetbrainsMono Nerd Font"
         config.color_scheme = 'Gruvbox Dark (Gogh)'
-        config.enable_wayland = false
+        config.enable_wayland = true
         config.audible_bell = "Disabled"
         config.window_padding = {
           left = '1cell',
@@ -54,16 +54,21 @@
 
     nixvim = {
       enable = true;
+      colorschemes.gruvbox.enable = true;
       extraPackages = with pkgs; [
+        nodejs
         alejandra
         black
         nodePackages_latest.prettier
-        rubyfmt
         stylua
         yamlfmt
+        statix
+        python313Packages.flake8
       ];
-      extraPlugins = [pkgs.vimPlugins.gruvbox];
-      colorscheme = "gruvbox";
+      extraPlugins = with pkgs.vimPlugins; [
+        leetcode-nvim
+      ];
+      extraConfigLua = "require('leetcode').setup({lang=rust})";
       opts = {
         number = true;
         autoindent = true;
@@ -85,17 +90,19 @@
       ];
 
       plugins = {
+        molten = {
+          enable = true;
+          python3Dependencies = p: with p; [ipykernel pnglatex plotly kaleido pyperclip cairosvg jupyter-client nbformat pynvim];
+        };
         bufferline.enable = true;
         oil.enable = true;
+        gitsigns.enable = true;
+        nui.enable = true;
         illuminate.enable = true;
+        vim-be-good.enable = true;
         web-devicons.enable = true;
         lualine.enable = true;
-        treesitter-context.enable = true;
         ts-autotag.enable = true;
-        ts-context-commentstring = {
-          enable = true;
-          disableAutoInitialization = false;
-        };
         treesitter = {
           enable = true;
           nixvimInjections = true;
@@ -121,6 +128,7 @@
             c
             cpp
             rust
+            query
           ];
         };
 
@@ -180,6 +188,10 @@
               ruby = ["rubyfmt"];
               yaml = ["yamlfmt"];
             };
+            format_on_save = ''              {
+                                  timeout_ms = 500,
+                                  lsp_format = "fallback",
+                            	}'';
           };
         };
         lsp = {
@@ -195,7 +207,7 @@
             nixd = {
               enable = true;
               settings = {
-                formatting.command = ["nixpkgs-fmt"];
+                formatting.command = ["alejandra"];
               };
             };
             pylsp = {

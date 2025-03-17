@@ -3,14 +3,11 @@
   inputs,
   lib,
   ...
-}: let
-  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in {
+}: {
   system.stateVersion = "24.11";
 
-  chaotic.mesa-git.enable = true;
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_cachyos-rc;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -63,6 +60,8 @@ in {
   environment.systemPackages = with pkgs;
     [
       unityhub
+      ripgrep
+      prismlauncher
       gitkraken
       lutris
       evince
@@ -97,7 +96,7 @@ in {
       cacert
       nss
       lact
-      openrazer-daemon
+      #openrazer-daemon
       polychromatic
       vscode-fhs
       jellyfin
@@ -110,6 +109,7 @@ in {
       distrobox_git
       alejandra
       podman-tui
+      lazygit
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight];
 
@@ -263,12 +263,10 @@ in {
     graphics = {
       enable = true;
       enable32Bit = true;
-      package = hyprland-pkgs.mesa.drivers;
-      package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;
-    openrazer.enable = true;
+    #openrazer.enable = true;
   };
 
   # User Account
@@ -280,7 +278,7 @@ in {
   };
 
   programs = {
-    nix-ld.enable = true;
+    nix-ld.enable = false;
     zsh.enable = true;
     appimage.enable = true;
     gamescope = {
