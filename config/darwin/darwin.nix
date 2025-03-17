@@ -23,6 +23,7 @@
     neovim
     nixd
     git
+		lazygit
   ];
 
   networking = {
@@ -43,16 +44,18 @@
     tailscale = {
       enable = true;
     };
+		aerospace.enable = false;
   };
 
   homebrew = {
     enable = true;
+		global.autoUpdate = true;
+
     casks = [
       "ollama"
     ];
     onActivation = {
       cleanup = "zap";
-      autoUpdate = true;
       upgrade = true;
     };
   };
