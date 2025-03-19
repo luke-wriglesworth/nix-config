@@ -14,6 +14,7 @@
     pkgs.papirus-icon-theme
     pkgs.hyprlock
     pkgs.hypridle
+    pkgs.hyprpolkitagent
     pkgs.hyprsunset
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   ];

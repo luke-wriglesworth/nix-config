@@ -40,6 +40,19 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    x2goserver = let
+      pkgs-x2go = import (builtins.fetchGit {
+        name = "pinned-x2goserver";
+        url = "https://github.com/nixos/nixpkgs/";
+        ref = "refs/heads/nixos-unstable";
+        rev = "0aa475546ed21629c4f5bbf90e38c846a99ec9e9";
+      }) {system = "x86_64-linux";};
+    in
+      pkgs-x2go.x2goserver;
+  };
+
   time.timeZone = "US/Eastern";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.supportedLocales = [
@@ -49,8 +62,8 @@
   zramSwap.enable = true;
 
   networking = {
-    hostName = "nixos";
     firewall.enable = false;
+    hostName = "nixos";
     networkmanager.enable = false;
     dhcpcd.enable = true;
     dhcpcd.extraConfig = ''nohook resolv.conf'';
@@ -59,6 +72,7 @@
 
   environment.systemPackages = with pkgs;
     [
+      ncdu
       unityhub
       ripgrep
       prismlauncher
@@ -122,14 +136,27 @@
     NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
   };
 
-  systemd.services.lact = {
-    description = "AMDGPU Control Daemon";
-    after = ["multi-user.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      ExecStart = "${pkgs.lact}/bin/lact daemon";
+  systemd.services = {
+    lact = {
+      enable = true;
+      description = "AMDGPU Control Daemon";
+      after = ["multi-user.target"];
+      wantedBy = ["multi-user.target"];
+      serviceConfig = {
+        ExecStart = "${pkgs.lact}/bin/lact daemon";
+      };
     };
-    enable = true;
+    ethtool = {
+      enable = true;
+      wantedBy = ["multi-user.target"];
+      description = "UDP GRO forwarding for tailscale server";
+      #environment = {NETDEV = "$(ip -o route get 8.8.8.8 | cut -f 5 -d ' ')";};
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+        ExecStart = "${pkgs.ethtool}/bin/ethtool -K enp8s0 rx-udp-gro-forwarding on rx-gro-list off";
+      };
+    };
   };
 
   # stop kernel log spam from covering greeter
@@ -153,6 +180,7 @@
   };
 
   services = {
+    x2goserver.enable = true;
     tailscale = {
       enable = true;
       useRoutingFeatures = "both";
@@ -171,13 +199,19 @@
       enable = true;
       acceleration = "rocm";
       rocmOverrideGfx = "10.3.1";
+      openFirewall = true;
+      host = "0.0.0.0";
+      port = 11434;
+      environmentVariables = {OLLAMA_MAX_LOADED_MODELS = "1";};
     };
     fwupd.enable = true;
     udev.extraRules = ''SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
     udisks2.enable = true;
     open-webui = {
       enable = true;
+      host = "0.0.0.0";
       port = 8080;
+      openFirewall = true;
     };
     hardware.openrgb = {
       enable = true;
@@ -190,6 +224,7 @@
         UsePAM = true;
         AllowUsers = ["luke"];
         UseDns = true;
+        X11Forwarding = true;
         PermitRootLogin = "no";
         PrintMotd = true;
         PasswordAuthentication = false;
@@ -278,6 +313,11 @@
   };
 
   programs = {
+    xwayland.enable = true;
+    ssh = {
+      forwardX11 = true;
+      setXAuthLocation = true;
+    };
     nix-ld.enable = false;
     zsh.enable = true;
     appimage.enable = true;

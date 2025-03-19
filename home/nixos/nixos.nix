@@ -49,6 +49,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
+    systemd.extraCommands = ["systemctl --user start hyprpolkitagent"];
     package = null;
     portalPackage = null;
     settings = {
@@ -246,14 +247,7 @@
         "HYPRCURSOR_THEME,rose-pine-hyprcursor"
         "HYPRCURSOR_SIZE,27"
       ];
-      exec-once = [
-        # "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch cliphist store"
-        # "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"
-        # "eval $(gnome-keyring-daemon --start --components=secrets,ssh,gpg,pkcs11)"
-        # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
-        # "hash dbus-update-activation-environment 2>/dev/null"
-        # "export SSH_AUTH_SOCK"
-      ];
+      #exec-once = [ ];
     };
   };
 

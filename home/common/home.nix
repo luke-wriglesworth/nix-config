@@ -17,6 +17,15 @@
       nix-direnv.enable = true;
     };
 
+    zellij = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        theme = "gruvbox-dark";
+        show_startup_tips = false;
+      };
+    };
+
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -25,7 +34,9 @@
     zsh = {
       enable = true;
       autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
       enableCompletion = true;
+      enableVteIntegration = true;
       initExtra = ''
         eval "$(starship init zsh)"
       '';
@@ -35,20 +46,21 @@
       enable = true;
       enableZshIntegration = true;
       extraConfig = ''
-        local config = wezterm.config_builder()
-        config.font_size = 12.0
-        config.font = wezterm.font "JetbrainsMono Nerd Font"
-        config.color_scheme = 'Gruvbox Dark (Gogh)'
-        config.enable_wayland = true
-        config.audible_bell = "Disabled"
-        config.window_padding = {
-          left = '1cell',
-          right = '1cell',
-          top = '0.5cell',
-          bottom = '0.5cell',
-        }
-        config.window_decorations = "TITLE | RESIZE"
-        return config
+              local config = wezterm.config_builder()
+              config.font_size = 12.0
+              config.font = wezterm.font "JetbrainsMono Nerd Font"
+              config.color_scheme = 'Gruvbox Dark (Gogh)'
+              config.enable_wayland = true
+              config.audible_bell = "Disabled"
+              config.window_padding = {
+                left = '1cell',
+                right = '1cell',
+                top =0 ,
+                bottom = 0,
+              }
+        config.enable_tab_bar = false
+              config.window_decorations = "NONE"
+              return config
       '';
     };
 
