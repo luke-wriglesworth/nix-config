@@ -104,7 +104,7 @@
       plugins = {
         molten = {
           enable = true;
-          python3Dependencies = p: with p; [ipykernel pnglatex plotly kaleido pyperclip cairosvg jupyter-client nbformat pynvim];
+          python3Dependencies = p: with p; [ipykernel plotly kaleido pyperclip cairosvg jupyter-client nbformat pynvim];
         };
         bufferline.enable = true;
         oil.enable = true;

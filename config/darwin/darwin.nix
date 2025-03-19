@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
+  nix.package = pkgs.nixVersions.latest;
   nix.settings.experimental-features = "nix-command flakes";
   nix.enable = true;
   system.stateVersion = 6;
@@ -13,17 +14,20 @@
       ]
       ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   };
-
+  environment.variables = {
+    OLLAMA_HOST = "0.0.0.0";
+  };
   environment.systemPackages = with pkgs; [
     gcc
     wezterm
     texlive.combined.scheme-full
     python313
     btop
+    uv
     neovim
     nixd
     git
-		lazygit
+    lazygit
   ];
 
   networking = {
@@ -44,15 +48,17 @@
     tailscale = {
       enable = true;
     };
-		aerospace.enable = false;
+    aerospace.enable = false;
   };
 
   homebrew = {
     enable = true;
-		global.autoUpdate = true;
+    global.autoUpdate = true;
 
     casks = [
       "ollama"
+      "xquartz"
+      "x2goclient"
     ];
     onActivation = {
       cleanup = "zap";
