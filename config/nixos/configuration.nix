@@ -5,7 +5,7 @@
   ...
 }: {
   system.stateVersion = "24.11";
-
+  chaotic.mesa-git.enable = true;
   boot = {
     kernelPackages = pkgs.linuxPackages_cachyos-rc;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
@@ -125,7 +125,7 @@
       podman-tui
       lazygit
     ]
-    ++ [inputs.zen-browser.packages."${system}".twilight];
+    ++ [inputs.zen-browser.packages."${system}".twilight-official];
 
   environment.sessionVariables = {
     EDITOR = "nvim";
