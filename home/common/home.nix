@@ -8,9 +8,34 @@
 {
   imports = [inputs.nixvim.homeManagerModules.nixvim];
   home.file = {};
+  home.packages = with pkgs; [dust];
   nixpkgs.config.allowUnfree = true;
   xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
+    mcfly = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      colors = {
+        "fg" = "#ebdbb2";
+        "bg" = "#282828";
+        "hl" = "#fabd2f";
+        "fg+" = "#ebdbb2";
+        "bg+" = "#3c3836";
+        "hl+" = "#fabd2f";
+        "info" = "#83a598";
+        "prompt" = "#bdae93";
+        "spinner" = "#fabd2f";
+        "pointer" = "#83a598";
+        "marker" = "#fe8019";
+        "header" = "#665c54";
+      };
+    };
+    ripgrep.enable = true;
+    bat.enable = true;
     home-manager.enable = true;
     direnv = {
       enable = true;
@@ -41,6 +66,12 @@
       initExtra = ''
         eval "$(starship init zsh)"
       '';
+      shellAliases = {
+        "cfg" = "nvim ~/.nixos/config/nixos/configuration.nix";
+        "hm" = "nvim ~/.nixos/home/common/home.nix";
+        "update" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
+        "update-home" = "nh home switch ~/.nixos";
+      };
     };
 
     wezterm = {
@@ -101,8 +132,8 @@
           command = "setlocal tabstop=2 shiftwidth=2 softtabstop=2";
         }
       ];
-
       plugins = {
+        lazygit.enable = true;
         molten = {
           enable = true;
           python3Dependencies = p: with p; [ipykernel plotly kaleido pyperclip cairosvg jupyter-client nbformat pynvim];
@@ -116,6 +147,20 @@
         web-devicons.enable = true;
         lualine.enable = true;
         ts-autotag.enable = true;
+        telescope = {
+          enable = true;
+          highlightTheme = "gruvbox";
+          keymaps = {
+            "<leader>ff" = "find_files";
+            "<leader>fg" = "live_grep";
+            "<leader>fb" = "buffers";
+            "<leader>fh" = "help_tags";
+          };
+          extensions = {
+            fzf-native.enable = true;
+            file-browser.enable = true;
+          };
+        };
         treesitter = {
           enable = true;
           nixvimInjections = true;

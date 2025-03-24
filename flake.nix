@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     zen-browser = {
@@ -38,6 +39,7 @@
 
   outputs = inputs @ {
     nixpkgs,
+    nixpkgs-pinned,
     nix-darwin,
     nixos-hardware,
     chaotic,
@@ -45,9 +47,15 @@
   }: {
     # System Configurations
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
+      nixos = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs system;
+          pkgs-pinned = import nixpkgs-pinned {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        };
         modules = [
           ./config/nixos/configuration.nix
           ./config/nixos/hyprland.nix

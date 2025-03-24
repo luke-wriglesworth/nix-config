@@ -2,12 +2,14 @@
   pkgs,
   inputs,
   lib,
+  pkgs-pinned,
   ...
-}: {
+}: let
+  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   system.stateVersion = "24.11";
-  chaotic.mesa-git.enable = true;
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-rc;
+    kernelPackages = pkgs.linuxPackages_cachyos;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -40,18 +42,11 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    x2goserver = let
-      pkgs-x2go = import (builtins.fetchGit {
-        name = "pinned-x2goserver";
-        url = "https://github.com/nixos/nixpkgs/";
-        ref = "refs/heads/nixos-unstable";
-        rev = "0aa475546ed21629c4f5bbf90e38c846a99ec9e9";
-      }) {system = "x86_64-linux";};
-    in
-      pkgs-x2go.x2goserver;
-  };
+  nixpkgs.overlays = [
+    (self: super: {
+      open-webui = pkgs-pinned.open-webui;
+    })
+  ];
 
   time.timeZone = "US/Eastern";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -77,14 +72,12 @@
       ripgrep
       prismlauncher
       gitkraken
-      lutris
       evince
       element-desktop
       gh
       gh-copilot
       libreoffice
       lmstudio
-      texlive.combined.scheme-full
       clinfo
       amdgpu_top
       en-croissant
@@ -124,6 +117,7 @@
       alejandra
       podman-tui
       lazygit
+      hydra-check
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight-official];
 
@@ -180,7 +174,7 @@
   };
 
   services = {
-    x2goserver.enable = true;
+    x2goserver.enable = false;
     tailscale = {
       enable = true;
       useRoutingFeatures = "both";
@@ -298,6 +292,8 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      package = hyprland-pkgs.mesa;
+      package32 = hyprland-pkgs.pkgsi686Linux.mesa;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;
