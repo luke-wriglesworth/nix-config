@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 # Configs common between all machines
@@ -46,21 +47,21 @@
       enable = true;
       enableZshIntegration = true;
       extraConfig = ''
-              local config = wezterm.config_builder()
-              config.font_size = 12.0
-              config.font = wezterm.font "JetbrainsMono Nerd Font"
-              config.color_scheme = 'Gruvbox Dark (Gogh)'
-              config.enable_wayland = true
-              config.audible_bell = "Disabled"
-              config.window_padding = {
-                left = '1cell',
-                right = '1cell',
-                top =0 ,
-                bottom = 0,
-              }
-        config.enable_tab_bar = false
-              config.window_decorations = "NONE"
-              return config
+                     local config = wezterm.config_builder()
+                     config.font_size = 12.0
+                     config.font = wezterm.font "JetbrainsMono Nerd Font"
+                     config.color_scheme = 'Gruvbox Dark (Gogh)'
+                     config.enable_wayland = true
+                     config.audible_bell = "Disabled"
+        				 config.enable_tab_bar = false
+                     config.window_padding = {
+            	left = '1cell',
+            	right = '1cell',
+            	top =0,
+            	bottom = 0,
+            }
+        ${lib.optionalString pkgs.stdenv.isLinux "config.window_decorations = 'NONE'"}
+            return config
       '';
     };
 
