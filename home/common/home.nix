@@ -16,6 +16,7 @@
       enable = true;
       enableZshIntegration = true;
     };
+    fd.enable = true;
     fzf = {
       enable = true;
       enableZshIntegration = true;

@@ -46,6 +46,20 @@
     };
   };
 
+  systemd.user.services.ulauncher = {
+    Unit = {
+      Description = "Ulauncher service";
+      Documentation = "https://ulauncher.io/";
+    };
+    Service = {
+      Type = "simple";
+      Restart = "always";
+      RestartSec = 1;
+      ExecStart = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
+    };
+    Install = {WantedBy = ["graphical-session.target"];};
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -213,7 +227,8 @@
         "$mod, j, movefocus, d"
 
         # Applications
-        "$mod, r, exec, pkill fuzzel || uwsm app -- ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
+        #"$mod, r, exec, pkill fuzzel || uwsm app -- ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
+        "$mod, r, exec, uwsm app -- ${pkgs.ulauncher}/bin/ulauncher-toggle"
 
         # Clipboard
         "$mod ALT, v, exec, pkill fuzzel || cliphist list | fuzzel --no-fuzzy --dmenu | cliphist decode | wl-copy"

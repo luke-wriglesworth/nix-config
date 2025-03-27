@@ -4,9 +4,8 @@
   lib,
   pkgs-pinned,
   ...
-}: let
-  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in {
+}: {
+  chaotic.mesa-git.enable = true;
   system.stateVersion = "24.11";
   boot = {
     kernelPackages = pkgs.linuxPackages_cachyos;
@@ -44,11 +43,14 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (self: super: {
-      open-webui = pkgs-pinned.open-webui;
+      #open-webui = pkgs-pinned.open-webui;
     })
   ];
 
-  time.timeZone = "US/Eastern";
+  time = {
+    timeZone = "US/Eastern";
+    hardwareClockInLocalTime = true;
+  };
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
@@ -67,7 +69,7 @@ in {
 
   environment.systemPackages = with pkgs;
     [
-      ncdu
+      devdocs-desktop
       unityhub
       ripgrep
       prismlauncher
@@ -118,6 +120,7 @@ in {
       podman-tui
       lazygit
       hydra-check
+      mathematica
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight-official];
 
@@ -292,8 +295,6 @@ in {
     graphics = {
       enable = true;
       enable32Bit = true;
-      package = hyprland-pkgs.mesa;
-      package32 = hyprland-pkgs.pkgsi686Linux.mesa;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;
