@@ -2,7 +2,9 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  hyprland-flake = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+in {
   environment.systemPackages = [
     pkgs.wl-clipboard
     pkgs.slurp
@@ -28,8 +30,8 @@
     hyprland = {
       enable = true;
       xwayland.enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      package = hyprland-flake.hyprland;
+      portalPackage = hyprland-flake.xdg-desktop-portal-hyprland;
       withUWSM = true;
     };
     uwsm = {

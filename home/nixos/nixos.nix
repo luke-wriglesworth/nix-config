@@ -62,6 +62,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     systemd.enable = true;
     systemd.extraCommands = ["systemctl --user start hyprpolkitagent"];
     package = null;
@@ -98,8 +99,8 @@
 
       decoration = {
         rounding = 20;
-        active_opacity = 0.9;
-        inactive_opacity = 0.8;
+        active_opacity = 1.0;
+        inactive_opacity = 0.85;
         fullscreen_opacity = 1.0;
 
         shadow = {
@@ -299,17 +300,17 @@
     overlay.enable = true;
     hyprland.enable = true;
     overwrite.enable = true;
-    theme = "gruvbox";
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          left = ["dashboard" "workspaces" "windowtitle"];
-          middle = ["media" "cava"];
-          right = ["volume" "cpu" "ram" "systray" "bluetooth" "clock" "notifications"];
+    settings = {
+      theme.name = "nord";
+      layout = {
+        "bar.layouts" = {
+          "0" = {
+            left = ["dashboard" "workspaces" "windowtitle"];
+            middle = ["media" "cava"];
+            right = ["volume" "cpu" "ram" "systray" "bluetooth" "clock" "notifications"];
+          };
         };
       };
-    };
-    settings = {
       bar.launcher.autoDetectIcon = true;
       bar.workspaces.show_icons = true;
       bar.workspaces.show_numbered = true;

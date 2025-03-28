@@ -4,8 +4,10 @@
   lib,
   pkgs-pinned,
   ...
-}: {
-  chaotic.mesa-git.enable = true;
+}: let
+  hyprland-mesa = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
+  chaotic.mesa-git.enable = false;
   system.stateVersion = "24.11";
   boot = {
     kernelPackages = pkgs.linuxPackages_cachyos;
@@ -42,11 +44,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
-    (self: super: {
-      #open-webui = pkgs-pinned.open-webui;
-    })
   ];
-
   time = {
     timeZone = "US/Eastern";
     hardwareClockInLocalTime = true;
@@ -295,6 +293,8 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      package = hyprland-mesa.mesa;
+      package32 = hyprland-mesa.pkgsi686Linux.mesa;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;

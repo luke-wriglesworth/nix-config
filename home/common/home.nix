@@ -10,7 +10,6 @@
   home.file = {};
   home.packages = with pkgs; [dust];
   nixpkgs.config.allowUnfree = true;
-  xdg.configFile."starship.toml".source = ./starship.toml;
   programs = {
     mcfly = {
       enable = true;
@@ -48,14 +47,9 @@
       enable = true;
       enableZshIntegration = true;
       settings = {
-        theme = "gruvbox-dark";
+        theme = "nord";
         show_startup_tips = false;
       };
-    };
-
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
     };
 
     zsh = {
@@ -63,15 +57,24 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
-      enableVteIntegration = true;
-      initExtra = ''
-        eval "$(starship init zsh)"
-      '';
+
+      plugins = [
+        {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+        {
+          name = "powerlevel10k-config";
+          src = ./p10k-config;
+          file = "p10k.zsh";
+        }
+      ];
       shellAliases = {
         "cfg" = "nvim ~/.nixos/config/nixos/configuration.nix";
         "hm" = "nvim ~/.nixos/home/common/home.nix";
-        "update" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
-        "update-home" = "nh home switch ~/.nixos";
+        "nixswitch" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
+        "homeswitch" = "nh home switch ~/.nixos";
       };
     };
 
@@ -82,7 +85,7 @@
                      local config = wezterm.config_builder()
                      config.font_size = 12.0
                      config.font = wezterm.font "JetbrainsMono Nerd Font"
-                     config.color_scheme = 'Gruvbox Dark (Gogh)'
+                     config.color_scheme = 'nord'
                      config.enable_wayland = true
                      config.audible_bell = "Disabled"
         				 config.enable_tab_bar = false
@@ -99,7 +102,7 @@
 
     nixvim = {
       enable = true;
-      colorschemes.gruvbox.enable = true;
+      colorschemes.nord.enable = true;
       extraPackages = with pkgs; [
         nodejs
         alejandra
@@ -150,7 +153,7 @@
         ts-autotag.enable = true;
         telescope = {
           enable = true;
-          highlightTheme = "gruvbox";
+          highlightTheme = "nord";
           keymaps = {
             "<leader>ff" = "find_files";
             "<leader>fg" = "live_grep";

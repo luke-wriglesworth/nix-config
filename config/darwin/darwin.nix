@@ -20,7 +20,6 @@
   environment.systemPackages = with pkgs; [
     gcc
     wezterm
-    texlive.combined.scheme-full
     python313
     btop
     uv
