@@ -1,6 +1,7 @@
 {
   description = "Luke's NixOS configuration";
   inputs = {
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
@@ -41,6 +42,7 @@
     nixpkgs,
     nixpkgs-pinned,
     nix-darwin,
+    determinate,
     nixos-hardware,
     chaotic,
     ...
@@ -61,6 +63,7 @@
           ./config/nixos/hyprland.nix
           ./config/nixos/hardware-configuration.nix
           chaotic.nixosModules.default
+          determinate.nixosModules.default
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
         ];

@@ -24,7 +24,7 @@
 
   nix = {
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-    package = pkgs.nixVersions.latest;
+    #package = pkgs.nixVersions.latest;
     gc = {
       automatic = false;
       dates = "weekly";
