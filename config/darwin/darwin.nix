@@ -19,7 +19,6 @@
   };
   environment.systemPackages = with pkgs; [
     gcc
-    wezterm
     python313
     btop
     uv
@@ -27,7 +26,7 @@
     nixd
     git
     lazygit
-    raycast
+    home-manager
   ];
 
   networking = {
@@ -45,6 +44,13 @@
   };
 
   services = {
+    jankyborders.enable = false;
+    sketchybar = {
+      enable = false;
+      config = ''
+      '';
+      extraPackages = [pkgs.lua5_4 pkgs.jq];
+    };
     tailscale = {
       enable = true;
     };
@@ -52,10 +58,12 @@
       enable = true;
       settings = {
         gaps = {
-          outer.left = 0;
-          outer.bottom = 0;
-          outer.top = 0;
-          outer.right = 0;
+          inner.horizontal = 10;
+          inner.vertical = 10;
+          outer.left = 8;
+          outer.bottom = 8;
+          outer.top = 4;
+          outer.right = 8;
         };
         mode.main.binding = {
           alt-h = "focus left";
@@ -83,7 +91,7 @@
           alt-shift-9 = "move-node-to-workspace 9";
           alt-slash = "layout tiles horizontal vertical";
           alt-comma = "layout accordion horizontal vertical";
-          alt-q = "exec-and-forget open -n /nix/store/j9pqrichkzmk3y5zva23ny8y82yqkdnn-system-applications/Applications/WezTerm.app";
+          alt-q = "exec-and-forget open -n /run/current-system/Applications/WezTerm.app";
           alt-w = "close --quit-if-last-window";
         };
       };
@@ -92,16 +100,13 @@
 
   homebrew = {
     enable = true;
-    global.autoUpdate = true;
-
     casks = [
+      "raycast"
       "ollama"
       "xquartz"
       "x2goclient"
+      "ghostty"
+      "font-sketchybar-app-font"
     ];
-    onActivation = {
-      cleanup = "zap";
-      upgrade = true;
-    };
   };
 }

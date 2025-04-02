@@ -1,6 +1,15 @@
 {
   description = "Luke's NixOS configuration";
   inputs = {
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
@@ -41,6 +50,9 @@
     nixpkgs,
     nixpkgs-pinned,
     nix-darwin,
+    nix-homebrew,
+    homebrew-core,
+    homebrew-cask,
     nixos-hardware,
     chaotic,
     ...
@@ -72,6 +84,19 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./config/darwin/darwin.nix
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = true;
+              user = "lukewriglesworth";
+              mutableTaps = false;
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+              };
+            };
+          }
         ];
       };
     };
