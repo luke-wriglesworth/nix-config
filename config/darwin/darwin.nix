@@ -91,7 +91,7 @@
           alt-shift-9 = "move-node-to-workspace 9";
           alt-slash = "layout tiles horizontal vertical";
           alt-comma = "layout accordion horizontal vertical";
-          alt-q = "exec-and-forget open -n /run/current-system/Applications/WezTerm.app";
+          alt-q = "exec-and-forget open -n ~/.nix-profile/Applications/WezTerm.app";
           alt-w = "close --quit-if-last-window";
         };
       };

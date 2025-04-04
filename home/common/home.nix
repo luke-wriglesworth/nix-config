@@ -85,7 +85,7 @@
             	bottom = 0,
             }
         ${lib.optionalString pkgs.stdenv.isLinux "config.window_decorations = 'NONE'"}
-            return config
+        return config
       '';
     };
 
