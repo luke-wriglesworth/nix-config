@@ -6,10 +6,14 @@
 }:
 # Configs common between all machines
 {
-  imports = [inputs.nixvim.homeManagerModules.nixvim];
+  imports = [inputs.nixvim.homeManagerModules.nixvim inputs.stylix.homeManagerModules.stylix];
   home.file = {};
   home.packages = with pkgs; [dust];
   nixpkgs.config.allowUnfree = true;
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-pale.yaml";
+  };
   programs = {
     mcfly = {
       enable = true;
@@ -19,20 +23,6 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
-      colors = {
-        "fg" = "#ebdbb2";
-        "bg" = "#282828";
-        "hl" = "#fabd2f";
-        "fg+" = "#ebdbb2";
-        "bg+" = "#3c3836";
-        "hl+" = "#fabd2f";
-        "info" = "#83a598";
-        "prompt" = "#bdae93";
-        "spinner" = "#fabd2f";
-        "pointer" = "#83a598";
-        "marker" = "#fe8019";
-        "header" = "#665c54";
-      };
     };
     ripgrep.enable = true;
     bat.enable = true;
@@ -47,7 +37,7 @@
       enable = true;
       enableZshIntegration = true;
       settings = {
-        theme = "nord";
+        #theme = "nord";
         show_startup_tips = false;
       };
     };
@@ -73,8 +63,8 @@
       shellAliases = {
         "cfg" = "nvim ~/.nixos/config/nixos/configuration.nix";
         "hm" = "nvim ~/.nixos/home/common/home.nix";
-        "nixswitch" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
-        "homeswitch" = "nh home switch ~/.nixos";
+        "update" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
+        "update-hm" = "nh home switch ~/.nixos";
       };
     };
 
@@ -85,7 +75,6 @@
                      local config = wezterm.config_builder()
                      config.font_size = 12.0
                      config.font = wezterm.font "JetbrainsMono Nerd Font"
-                     config.color_scheme = 'nord'
                      config.enable_wayland = true
                      config.audible_bell = "Disabled"
         				 config.enable_tab_bar = false
@@ -102,7 +91,7 @@
 
     nixvim = {
       enable = true;
-      colorschemes.nord.enable = true;
+      #colorschemes.nord.enable = true;
       extraPackages = with pkgs; [
         nodejs
         alejandra
@@ -153,7 +142,7 @@
         ts-autotag.enable = true;
         telescope = {
           enable = true;
-          highlightTheme = "nord";
+          #highlightTheme = "nord";
           keymaps = {
             "<leader>ff" = "find_files";
             "<leader>fg" = "live_grep";

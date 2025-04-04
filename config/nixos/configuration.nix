@@ -7,7 +7,6 @@
 }: let
   hyprland-mesa = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
-  chaotic.mesa-git.enable = false;
   system.stateVersion = "24.11";
   boot = {
     kernelPackages = pkgs.linuxPackages_cachyos;
@@ -22,6 +21,10 @@ in {
       "fs.inotify.max_user_instances" = 1024; # default:   128
       "fs.inotify.max_queued_events" = 32768; # default: 16384
     };
+  };
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-pale.yaml";
   };
 
   nix = {
@@ -43,8 +46,6 @@ in {
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-  ];
   time = {
     timeZone = "US/Eastern";
     hardwareClockInLocalTime = true;
@@ -318,11 +319,6 @@ in {
     nix-ld.enable = false;
     zsh.enable = true;
     appimage.enable = true;
-    gamescope = {
-      enable = true;
-      capSysNice = true;
-      package = pkgs.gamescope_git;
-    };
     steam = {
       enable = true;
       gamescopeSession.enable = true;
