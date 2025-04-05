@@ -77,6 +77,7 @@
                      config.font = wezterm.font "JetbrainsMono Nerd Font"
                      config.enable_wayland = true
                      config.audible_bell = "Disabled"
+        		 config.window_close_confirmation = 'NeverPrompt'
         				 config.enable_tab_bar = false
                      config.window_padding = {
             	left = '1cell',

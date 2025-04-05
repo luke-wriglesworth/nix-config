@@ -5,7 +5,6 @@
   pkgs-pinned,
   ...
 }: let
-  hyprland-mesa = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   system.stateVersion = "24.11";
   boot = {
@@ -22,11 +21,13 @@ in {
       "fs.inotify.max_queued_events" = 32768; # default: 16384
     };
   };
+
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-pale.yaml";
   };
 
+  chaotic.mesa-git.enable = true;
   nix = {
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     package = pkgs.nixVersions.latest;
@@ -45,7 +46,12 @@ in {
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   time = {
     timeZone = "US/Eastern";
     hardwareClockInLocalTime = true;
@@ -104,8 +110,6 @@ in {
       cacert
       nss
       lact
-      #openrazer-daemon
-      polychromatic
       vscode-fhs
       jellyfin
       jellyfin-web
@@ -294,19 +298,16 @@ in {
     graphics = {
       enable = true;
       enable32Bit = true;
-      package = hyprland-mesa.mesa;
-      package32 = hyprland-mesa.pkgsi686Linux.mesa;
     };
     amdgpu.initrd.enable = true;
     amdgpu.opencl.enable = true;
-    #openrazer.enable = true;
   };
 
   # User Account
   users.users.luke = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = ["wheel" "video" "render" "docker" "openrazer" "podman"];
+    extraGroups = ["wheel" "video" "render" "docker" "podman"];
     home = "/home/luke";
   };
 
