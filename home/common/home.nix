@@ -14,7 +14,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
@@ -122,7 +122,8 @@
       installBatSyntax = true;
       settings = {
         font-family = "${config.stylix.fonts.monospace.name}";
-        font-size = 14;
+        font-size = 13;
+        confirm-close-surface = false;
       };
     };
 
