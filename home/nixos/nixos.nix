@@ -70,7 +70,7 @@ in {
     package = null;
     portalPackage = null;
     settings = {
-      "$terminal" = "wezterm";
+      "$terminal" = "ghostty";
       "$mod" = "SUPER";
 
       monitor = [

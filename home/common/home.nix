@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   lib,
+  config,
   ...
 }:
 # Configs common between all machines
@@ -12,9 +13,32 @@
   nixpkgs.config.allowUnfree = true;
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-pale.yaml";
+    autoEnable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetbrainsMono Nerd Font Mono";
+      };
+      serif = config.stylix.fonts.sansSerif;
+      sansSerif = {
+        package = pkgs.nerd-fonts.noto;
+        name = "NotoSans Nerd Font";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
   };
   programs = {
+    eza = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    bat.enable = true;
+    ripgrep-all.enable = true;
+    ripgrep.enable = true;
     mcfly = {
       enable = true;
       enableZshIntegration = true;
@@ -24,8 +48,6 @@
       enable = true;
       enableZshIntegration = true;
     };
-    ripgrep.enable = true;
-    bat.enable = true;
     home-manager.enable = true;
     direnv = {
       enable = true;
@@ -36,8 +58,8 @@
     zellij = {
       enable = true;
       enableZshIntegration = true;
+      attachExistingSession = true;
       settings = {
-        #theme = "nord";
         show_startup_tips = false;
       };
     };
@@ -54,11 +76,11 @@
           src = pkgs.zsh-powerlevel10k;
           file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
         }
-        {
-          name = "powerlevel10k-config";
-          src = ./p10k-config;
-          file = "p10k.zsh";
-        }
+        #{
+        #name = "powerlevel10k-config";
+        #src = ./p10k-config;
+        #file = "p10k.zsh";
+        #}
       ];
       shellAliases = {
         "cfg" = "nvim ~/.nixos/config/nixos/configuration.nix";
@@ -94,9 +116,18 @@
       '';
     };
 
+    ghostty = {
+      enable = true;
+      enableZshIntegration = true;
+      installBatSyntax = true;
+      settings = {
+        font-family = "${config.stylix.fonts.monospace.name}";
+        font-size = 14;
+      };
+    };
+
     nixvim = {
       enable = true;
-      #colorschemes.nord.enable = true;
       extraPackages = with pkgs; [
         nodejs
         alejandra
