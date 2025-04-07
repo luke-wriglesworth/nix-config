@@ -119,7 +119,10 @@
     ghostty = {
       enable = true;
       enableZshIntegration = true;
-      installBatSyntax = true;
+      package =
+        if pkgs.stdenv.isLinux
+        then pkgs.ghostty
+        else null;
       settings = {
         font-family = "${config.stylix.fonts.monospace.name}";
         font-size = 13;
