@@ -14,7 +14,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
@@ -110,7 +110,7 @@
         ${
           if pkgs.stdenv.isDarwin
           then "config.font_size = 16.0"
-          else "config.font_size = 12.0"
+          else "config.font_size = 14.0"
         }
         return config
       '';

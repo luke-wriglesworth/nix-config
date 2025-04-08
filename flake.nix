@@ -45,6 +45,7 @@
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   outputs = inputs @ {
@@ -57,6 +58,7 @@
     nixos-hardware,
     chaotic,
     stylix,
+    determinate,
     ...
   }: {
     # System Configurations
@@ -76,6 +78,7 @@
           ./config/nixos/hardware-configuration.nix
           chaotic.nixosModules.default
           stylix.nixosModules.stylix
+          determinate.nixosModules.default
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
         ];

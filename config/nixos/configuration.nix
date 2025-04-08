@@ -24,12 +24,12 @@ in {
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
 
   nix = {
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-    package = pkgs.nixVersions.latest;
+    #package = pkgs.nixVersions.latest;
     gc = {
       automatic = false;
       dates = "weekly";
@@ -53,7 +53,7 @@ in {
 
   time = {
     timeZone = "US/Eastern";
-    hardwareClockInLocalTime = true;
+    #hardwareClockInLocalTime = true;
   };
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.supportedLocales = [
