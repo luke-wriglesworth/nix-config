@@ -125,7 +125,7 @@ in {
       mathematica
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight-official];
-
+  environment.enableAllTerminfo = true;
   environment.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "zen";
