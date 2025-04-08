@@ -1,9 +1,12 @@
-{pkgs, lib, inputs,  ...}: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
   nix = {
     enable = false;
-    package = pkgs.nixVersions.latest;
-    settings.experimental-features = "nix-command flakes";
   };
   system.stateVersion = 6;
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -43,24 +46,10 @@
       "2606:4700:4700::1001"
     ];
   };
-  system.activationScripts = {
-    extraActivation = {
-      text = ''
-        #!/bin/bash
-        sudo yabai --load-sa
-        yabai -m space --destroy
-        yabai -m space --destroy
-        yabai -m space --destroy
-        yabai -m space --destroy
-        yabai -m space --create
-        yabai -m space --create
-        yabai -m space --create
-        yabai -m space --create
-        echo "displays created..."
-      '';
-    };
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
-
   services = {
     yabai = {
       enable = true;
@@ -77,31 +66,31 @@
         right_padding = 10;
         window_gap = 10;
       };
-      extraConfig = ''
-        sudo yabai --load-sa
-      '';
     };
     skhd = {
       enable = true;
       skhdConfig = ''
-        alt - h : yabai -m window --focus west
-        alt - j : yabai -m window --focus south
-        alt - k : yabai -m window --focus north
-        alt - l : yabai -m window --focus east
-        shift + alt - h : yabai -m window --warp west
-        shift + alt - j : yabai -m window --warp south
-        shift + alt - k : yabai -m window --warp north
-        shift + alt - l : yabai -m window --warp east
-        alt - 1 : yabai -m space --focus 1
-        alt - 2 : yabai -m space --focus 2
-        alt - 3 : yabai -m space --focus 3
-        alt - 4 : yabai -m space --focus 4
-        alt - 5 : yabai -m space --focus 5
-        shift + alt - 1 : yabai -m window --space 1
-        shift + alt - 2 : yabai -m window --space 2
-        shift + alt - 3 : yabai -m window --space 3
-        shift + alt - 4 : yabai -m window --space 4
-        shift + alt - 5 : yabai -m window --space 5
+            alt - h : yabai -m window --focus west
+            alt - j : yabai -m window --focus south
+            alt - k : yabai -m window --focus north
+            alt - l : yabai -m window --focus east
+            shift + alt - h : yabai -m window --warp west
+            shift + alt - j : yabai -m window --warp south
+            shift + alt - k : yabai -m window --warp north
+            shift + alt - l : yabai -m window --warp east
+            alt - 1 : yabai -m space --focus 1
+            alt - 2 : yabai -m space --focus 2
+            alt - 3 : yabai -m space --focus 3
+            alt - 4 : yabai -m space --focus 4
+            alt - 5 : yabai -m space --focus 5
+            shift + alt - 1 : yabai -m window --space 1
+            shift + alt - 2 : yabai -m window --space 2
+            shift + alt - 3 : yabai -m window --space 3
+            shift + alt - 4 : yabai -m window --space 4
+            shift + alt - 5 : yabai -m window --space 5
+            alt - c : yabai -m window --close
+            alt - q : open -n ~/.nix-profile/Applications/WezTerm.app
+        alt - b : open -n /Applications/Safari.app
       '';
     };
 
@@ -152,14 +141,12 @@
     casks = [
       "raycast"
       "ollama"
-      "xquartz"
-      "x2goclient"
       "ghostty"
     ];
   };
   system.startup.chime = false;
   system.defaults = {
-    NSGlobalDomain._HIHideMenuBar = true;
+    NSGlobalDomain._HIHideMenuBar = false;
     dock = {
       autohide = true;
       orientation = "left";
