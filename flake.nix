@@ -11,7 +11,7 @@
       flake = false;
     };
     nixpkgs.url = "github:nixos/nixpkgs/master";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
@@ -45,7 +45,9 @@
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate = {
+    	url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    };
   };
 
   outputs = inputs @ {

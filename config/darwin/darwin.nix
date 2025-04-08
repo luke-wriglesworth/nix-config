@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{pkgs, lib, inputs,  ...}: {
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
   nix = {
-    enable = true;
+    enable = false;
     package = pkgs.nixVersions.latest;
     settings.experimental-features = "nix-command flakes";
   };
@@ -23,10 +23,7 @@
     ncurses
     gcc
     coreutils-full
-    python313
     btop
-    uv
-    neovim
     nixd
     git
     lazygit
