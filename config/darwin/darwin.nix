@@ -67,6 +67,7 @@
               	)
               	sketchybar --default "''${default[@]}"
         sketchybar --add event aerospace_workspace_change
+
         for sid in $(aerospace list-workspaces --all); do
         		sketchybar --add item space.$sid left \
         				--subscribe space.$sid aerospace_workspace_change \
@@ -77,7 +78,7 @@
         				background.drawing=off \
         				label="$sid" \
         				click_script="aerospace workspace $sid" \
-        				script="Users/lukewriglesworth/nix-config/config/darwin/aerospace.sh $sid"
+        				script="$CONFIG_DIR/plugins/aerospace.sh $sid"
         done
               	sketchybar --update
               	echo "sketchybar loaded..."
@@ -90,11 +91,11 @@
     aerospace = {
       enable = true;
       settings = {
-        exec-on-workspace-change = [
-          "/bin/bash"
-          "-c"
-          "sketchybar --trigger aerospace_workspace_change FOCUSED=$AEROSPACE_FOCUSED_WORKSPACE"
-        ];
+        #exec-on-workspace-change = [
+        #  "/bin/bash"
+        #  "-c"
+        # "sketchybar --trigger aerospace_workspace_change FOCUSED=$AEROSPACE_FOCUSED_WORKSPACE"
+        #];
         gaps = {
           inner.horizontal = 10;
           inner.vertical = 10;
@@ -148,7 +149,7 @@
   };
   system.startup.chime = false;
   system.defaults = {
-    NSGlobalDomain._HIHideMenuBar = null;
+    NSGlobalDomain._HIHideMenuBar = true;
     dock = {
       autohide = true;
       orientation = "left";
