@@ -93,7 +93,6 @@ in {
       mangohud
       mangojuice
       unzip
-      nh
       zotero
       wget
       openrgb-with-all-plugins
@@ -123,6 +122,7 @@ in {
       lazygit
       hydra-check
       mathematica
+      inputs.nh.packages."x86_64-linux".default
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight-official];
   environment.enableAllTerminfo = true;

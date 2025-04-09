@@ -24,13 +24,13 @@
   };
   environment.systemPackages = with pkgs; [
     ncurses
-    gcc
     coreutils-full
     btop
     nixd
     git
     lazygit
     home-manager
+    inputs.nh.packages."aarch64-darwin".default
   ];
 
   networking = {

@@ -48,6 +48,10 @@
     determinate = {
       url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     };
+    nh = {
+      url = "github:viperMl/nh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -61,6 +65,7 @@
     chaotic,
     stylix,
     determinate,
+    nh,
     ...
   }: {
     # System Configurations
@@ -125,7 +130,7 @@
           ./home/nixos/nixos.nix
         ];
       };
-      "luke@darwin" = inputs.home-manager.lib.homeManagerConfiguration {
+      "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {system = "aarch64-darwin";};
         extraSpecialArgs = {inherit inputs;};
         modules = [
