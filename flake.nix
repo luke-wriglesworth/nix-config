@@ -85,7 +85,6 @@
           ./config/nixos/hardware-configuration.nix
           chaotic.nixosModules.default
           stylix.nixosModules.stylix
-          determinate.nixosModules.default
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
         ];

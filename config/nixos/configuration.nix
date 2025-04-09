@@ -29,16 +29,10 @@ in {
 
   nix = {
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-    #package = pkgs.nixVersions.latest;
-    gc = {
-      automatic = false;
-      dates = "weekly";
-      options = "--delete-older-than 10d";
-    };
+    package = pkgs.nixVersions.latest;
     settings = {
       cores = 24;
       max-jobs = 24;
-      auto-optimise-store = false;
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["root" "luke"];
       system-features = ["benchmark" "big-parallel" "kvm" "nixos-test" "gccarch-znver4" "gccarch-native"];
