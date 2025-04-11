@@ -62,8 +62,6 @@
     homebrew-cask,
     nixos-hardware,
     stylix,
-    determinate,
-    nh,
     ...
   }: {
     # System Configurations
