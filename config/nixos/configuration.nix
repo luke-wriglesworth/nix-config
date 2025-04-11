@@ -8,7 +8,7 @@
 in {
   system.stateVersion = "24.11";
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -24,7 +24,7 @@ in {
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
   };
 
   nix = {
@@ -67,10 +67,14 @@ in {
 
   environment.systemPackages = with pkgs;
     [
+      comma
       devdocs-desktop
       unityhub
       ripgrep
-      prismlauncher
+      (prismlauncher.override {
+        additionalPrograms = [];
+        jdks = [pkgs.jdk23 pkgs.jdk21];
+      })
       gitkraken
       evince
       element-desktop
@@ -110,12 +114,25 @@ in {
       discord
       nixd
       nix-index
-      distrobox_git
+      distrobox
       alejandra
       podman-tui
       lazygit
       hydra-check
-      mathematica
+      (mathematica.override {
+        source = pkgs.requireFile {
+          name = "Wolfram_14.2.1_LIN_Bndl.sh";
+          # Get this hash via a command similar to this:
+          # nix-store --query --hash \
+          # $(nix store add-path Mathematica_XX.X.X_BNDL_LINUX.sh --name 'Mathematica_XX.X.X_BNDL_LINUX.sh')
+          sha256 = "095i1z3rc3p5mdaif367k4vcaf4mzcszpbmnva17zm5zxl7y7vl1";
+          message = ''
+            Your override for Mathematica includes a different src for the installer,
+            and it is missing.
+          '';
+          hashMode = "recursive";
+        };
+      })
       inputs.nh.packages."x86_64-linux".default
     ]
     ++ [inputs.zen-browser.packages."${system}".twilight-official];
@@ -129,6 +146,7 @@ in {
     NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
   };
 
+  systemd.packages = [pkgs.lact];
   systemd.services = {
     lact = {
       enable = true;
@@ -292,8 +310,10 @@ in {
       enable = true;
       enable32Bit = true;
     };
-    amdgpu.initrd.enable = true;
-    amdgpu.opencl.enable = true;
+    amdgpu = {
+      opencl.enable = true;
+      initrd.enable = true;
+    };
   };
 
   # User Account

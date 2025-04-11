@@ -30,8 +30,8 @@ in {
     hyprland = {
       enable = true;
       xwayland.enable = true;
-      package = hyprland-flake.hyprland;
-      portalPackage = hyprland-flake.xdg-desktop-portal-hyprland;
+      #package = hyprland-flake.hyprland;
+      #portalPackage = hyprland-flake.xdg-desktop-portal-hyprland;
       withUWSM = true;
     };
     uwsm = {

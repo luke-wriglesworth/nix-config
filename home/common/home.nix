@@ -14,7 +14,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;

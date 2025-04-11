@@ -14,7 +14,6 @@
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     stylix.url = "github:danth/stylix";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
@@ -62,7 +61,6 @@
     homebrew-core,
     homebrew-cask,
     nixos-hardware,
-    chaotic,
     stylix,
     determinate,
     nh,
@@ -83,7 +81,6 @@
           ./config/nixos/configuration.nix
           ./config/nixos/hyprland.nix
           ./config/nixos/hardware-configuration.nix
-          chaotic.nixosModules.default
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
