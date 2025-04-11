@@ -14,6 +14,8 @@
   fonts = {
     packages = with pkgs;
       [
+        fastfetch
+        synergy
         ibm-plex
         jetbrains-mono
       ]
@@ -52,7 +54,15 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
+  programs = {
+    nix-index.enable = true;
+  };
   services = {
+    synergy = {
+      client.enable = true;
+      client.autoStart = true;
+      client.serverAddress = "100.67.54.72";
+    };
     yabai = {
       enable = true;
       enableScriptingAddition = true;
@@ -141,9 +151,11 @@
   homebrew = {
     enable = true;
     casks = [
+      "nomachine"
       "raycast"
       "ollama"
       "ghostty"
+      "rustdesk"
     ];
   };
   system.startup.chime = false;
