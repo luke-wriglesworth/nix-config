@@ -11,7 +11,7 @@
       flake = false;
     };
     nixpkgs.url = "github:nixos/nixpkgs/master";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     stylix.url = "github:danth/stylix";
@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {

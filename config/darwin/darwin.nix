@@ -29,6 +29,8 @@
     nixd
     git
     lazygit
+    gh
+    gh-copilot
     home-manager
     inputs.nh.packages."aarch64-darwin".default
   ];
