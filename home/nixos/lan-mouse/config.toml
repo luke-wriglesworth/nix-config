@@ -1,0 +1,10 @@
+port = 4242
+[[clients]]
+# position (left | right | top | bottom)
+position = "left"
+# hostname
+hostname = "lukes-macbook-pro"
+# activate this client immediately when lan-mouse is started
+activate_on_startup = true
+# optional list of (known) ip addresses
+ips = ["100.115.204.63"]

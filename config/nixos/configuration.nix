@@ -24,7 +24,7 @@ in {
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
 
   nix = {
@@ -67,6 +67,8 @@ in {
 
   environment.systemPackages = with pkgs;
     [
+      lan-mouse
+      nomachine-client
       comma
       devdocs-desktop
       unityhub
@@ -191,7 +193,6 @@ in {
   };
 
   services = {
-    x2goserver.enable = false;
     tailscale = {
       enable = true;
       useRoutingFeatures = "both";

@@ -48,6 +48,14 @@ in {
     };
   };
 
+  home.file = {
+    lan-mouse = {
+      enable = true;
+      source = ./lan-mouse/config.toml;
+      target = ".config/lan-mouse/config.toml";
+    };
+  };
+
   systemd.user.services.ulauncher = {
     Unit = {
       Description = "Ulauncher service";
