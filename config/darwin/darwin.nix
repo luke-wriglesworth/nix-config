@@ -14,8 +14,6 @@
   fonts = {
     packages = with pkgs;
       [
-        fastfetch
-        synergy
         ibm-plex
         jetbrains-mono
       ]
@@ -25,6 +23,7 @@
     OLLAMA_HOST = "0.0.0.0";
   };
   environment.systemPackages = with pkgs; [
+    lan-mouse
     ncurses
     coreutils-full
     nixd
@@ -53,15 +52,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
-  programs = {
-    nix-index.enable = true;
-  };
   services = {
-    synergy = {
-      client.enable = true;
-      client.autoStart = true;
-      client.serverAddress = "100.67.54.72";
-    };
     yabai = {
       enable = true;
       enableScriptingAddition = true;
@@ -106,42 +97,6 @@
     };
 
     jankyborders.enable = true;
-    sketchybar = {
-      enable = false;
-      config = ''
-              sketchybar --bar position=top height=40 blur_radius=30 color=0x40000000
-              default=(
-              	padding_left=5
-              	padding_right=5
-              	icon.font="Hack Nerd Font:Bold:17.0"
-              	label.font="Hack Nerd Font:Bold:14.0"
-              	icon.color=0xffffffff
-              	label.color=0xffffffff
-              	icon.padding_left=4
-              	icon.padding_right=4
-              	label.padding_left=4
-              	label.padding_right=4
-              	)
-              	sketchybar --default "''${default[@]}"
-        sketchybar --add event aerospace_workspace_change
-
-        for sid in $(aerospace list-workspaces --all); do
-        		sketchybar --add item space.$sid left \
-        				--subscribe space.$sid aerospace_workspace_change \
-        				--set space.$sid \
-        				background.color=0x44ffffff \
-        				background.corner_radius=5 \
-        				background.height=20 \
-        				background.drawing=off \
-        				label="$sid" \
-        				click_script="aerospace workspace $sid" \
-        				script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-        done
-              	sketchybar --update
-              	echo "sketchybar loaded..."
-      '';
-      extraPackages = [pkgs.lua5_4 pkgs.jq];
-    };
     tailscale = {
       enable = true;
     };
