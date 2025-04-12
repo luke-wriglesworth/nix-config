@@ -275,7 +275,7 @@ in {
       clients = [
         {
           position = "left";
-          activate_on_startup = false;
+          activate_on_startup = true;
           hostname = "lukes-macbook-pro";
           ips = ["100.115.204.63"];
           port = 4242;

@@ -32,6 +32,8 @@
     };
   };
   programs = {
+    btop.enable = true;
+    htop.enable = true;
     eza = {
       enable = true;
       enableZshIntegration = true;
@@ -85,8 +87,6 @@
       shellAliases = {
         "cfg" = "nvim ~/.nixos/config/nixos/configuration.nix";
         "hm" = "nvim ~/.nixos/home/common/home.nix";
-        "update" = "nix flake update --flake ~/.nixos && nh os switch ~/.nixos";
-        "update-hm" = "nh home switch ~/.nixos";
       };
     };
 

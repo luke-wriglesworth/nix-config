@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  hyprland-flake = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  hyprland-git = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   environment.systemPackages = [
     pkgs.wl-clipboard
@@ -30,8 +30,8 @@ in {
     hyprland = {
       enable = true;
       xwayland.enable = true;
-      #package = hyprland-flake.hyprland;
-      #portalPackage = hyprland-flake.xdg-desktop-portal-hyprland;
+      package = hyprland-git.hyprland;
+      portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
       withUWSM = true;
     };
     uwsm = {

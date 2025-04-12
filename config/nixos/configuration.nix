@@ -4,8 +4,7 @@
   lib,
   pkgs-pinned,
   ...
-}: let
-in {
+}: {
   system.stateVersion = "24.11";
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -99,7 +98,6 @@ in {
       vlc
       udiskie
       git
-      btop
       qbittorrent
       vlc
       mesa-demos
