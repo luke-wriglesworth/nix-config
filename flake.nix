@@ -44,9 +44,6 @@
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    determinate = {
-      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    };
     nh = {
       url = "github:viperMl/nh";
       inputs.nixpkgs.follows = "nixpkgs";
