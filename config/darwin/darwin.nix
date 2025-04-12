@@ -27,7 +27,6 @@
   environment.systemPackages = with pkgs; [
     ncurses
     coreutils-full
-    btop
     nixd
     git
     lazygit
