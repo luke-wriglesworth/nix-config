@@ -10,7 +10,7 @@
   background-alt = "#${config.lib.stylix.colors.base01}";
   foreground = "#${config.lib.stylix.colors.base05}";
 in {
-  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel];
+  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel inputs.lan-mouse.homeManagerModules.default];
   home.pointerCursor = {
     gtk.enable = true;
     name = "Adwaita";
@@ -45,14 +45,6 @@ in {
       splash = false;
       preload = ["/home/luke/Pictures/nixos.png"];
       wallpaper = ["DP-3,/home/luke/Pictures/nixos.png"];
-    };
-  };
-
-  home.file = {
-    lan-mouse = {
-      enable = true;
-      source = ./lan-mouse/config.toml;
-      target = ".config/lan-mouse/config.toml";
     };
   };
 
@@ -274,6 +266,21 @@ in {
         "HYPRCURSOR_SIZE,27"
       ];
       #exec-once = [ ];
+    };
+  };
+  programs.lan-mouse = {
+    enable = true;
+    systemd = true;
+    settings = {
+      clients = [
+        {
+          position = "left";
+          activate_on_startup = false;
+          hostname = "lukes-macbook-pro";
+          ips = ["100.115.204.63"];
+          port = 4242;
+        }
+      ];
     };
   };
 
