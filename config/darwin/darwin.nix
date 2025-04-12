@@ -23,7 +23,6 @@
     OLLAMA_HOST = "0.0.0.0";
   };
   environment.systemPackages = with pkgs; [
-    lan-mouse
     ncurses
     coreutils-full
     nixd
@@ -54,7 +53,7 @@
   };
   services = {
     yabai = {
-      enable = true;
+      enable = false;
       enableScriptingAddition = true;
       config = {
         layout = "bsp";
@@ -96,7 +95,7 @@
       '';
     };
 
-    jankyborders.enable = true;
+    jankyborders.enable = false;
     tailscale = {
       enable = true;
     };
