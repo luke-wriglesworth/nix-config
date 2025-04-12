@@ -53,7 +53,7 @@
   };
   services = {
     yabai = {
-      enable = false;
+      enable = true;
       enableScriptingAddition = true;
       config = {
         layout = "bsp";
@@ -95,7 +95,7 @@
       '';
     };
 
-    jankyborders.enable = false;
+    jankyborders.enable = true;
     tailscale = {
       enable = true;
     };
