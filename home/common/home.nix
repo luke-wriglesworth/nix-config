@@ -59,8 +59,8 @@
 
     zellij = {
       enable = true;
-      enableZshIntegration = true;
-      attachExistingSession = true;
+      enableZshIntegration = false;
+      attachExistingSession = false;
       settings = {
         show_startup_tips = false;
       };

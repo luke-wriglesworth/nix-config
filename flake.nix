@@ -14,6 +14,7 @@
     nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    jovian.url = "github:jovian-experiments/jovian-nixos";
     stylix.url = "github:danth/stylix";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
@@ -59,6 +60,7 @@
     nixpkgs-pinned,
     nix-darwin,
     nix-homebrew,
+    jovian,
     homebrew-core,
     homebrew-cask,
     nixos-hardware,
@@ -84,6 +86,11 @@
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
         ];
+      };
+      nixdeck = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linu";
+        specialArgs = {inherit inputs system;};
+        modules = [./config/steamdeck/configuration.nix ./config/steamdeck/hardware-configuration.nix];
       };
     };
     darwinConfigurations = {
@@ -123,6 +130,18 @@
           }
           ./home/common/home.nix
           ./home/nixos/nixos.nix
+        ];
+      };
+      "luke@nixdeck" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {system = "x86_64-linux";};
+        extraSpecialArgs = {inherit inputs;};
+        modules = [
+          {
+            home.username = "luke";
+            home.homeDirectory = "/home/luke";
+            home.stateVersion = "24.11";
+          }
+          ./home/common/home.nix
         ];
       };
       "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
