@@ -6,6 +6,7 @@
   ...
 }: {
   system.stateVersion = "24.11";
+  imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
@@ -42,6 +43,23 @@
     config = {
       allowUnfree = true;
     };
+    overlays = [
+      inputs.nix-minecraft.overlay
+      (final: prev: {
+        pythonPackagesExtensions =
+          prev.pythonPackagesExtensions
+          ++ [
+            #(pyfinal: pyprev: {
+            #  gcp-storage-emulator = pyprev.gcp-storage-emulator.overridePythonAttrs (oldAttrs: {
+            #    doCheck = false;
+            #  });
+            #  tencentcloud-sdk-python = pyprev.tencentcloud-sdk-python.overridePythonAttrs (oldAttrs: {
+            #    doCheck = false;
+            #  });
+            #})
+          ];
+      })
+    ];
   };
 
   time = {
@@ -64,78 +82,78 @@
     enableIPv6 = true;
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      lan-mouse
-      nomachine-client
-      comma
-      devdocs-desktop
-      unityhub
-      ripgrep
-      (prismlauncher.override {
-        additionalPrograms = [];
-        jdks = [pkgs.jdk23 pkgs.jdk21];
-      })
-      gitkraken
-      evince
-      element-desktop
-      gh
-      gh-copilot
-      libreoffice
-      lmstudio
-      clinfo
-      amdgpu_top
-      en-croissant
-      stockfish
-      adwaita-icon-theme
-      papirus-icon-theme
-      mangohud
-      mangojuice
-      unzip
-      zotero
-      wget
-      openrgb-with-all-plugins
-      vlc
-      udiskie
-      git
-      qbittorrent
-      vlc
-      mesa-demos
-      vulkan-tools
-      thunderbird
-      cacert
-      nss
-      lact
-      vscode-fhs
-      jellyfin
-      jellyfin-web
-      jellyfin-ffmpeg
-      jellyfin-media-player
-      discord
-      nixd
-      nix-index
-      distrobox
-      alejandra
-      podman-tui
-      lazygit
-      hydra-check
-      (mathematica.override {
-        source = pkgs.requireFile {
-          name = "Wolfram_14.2.1_LIN_Bndl.sh";
-          # Get this hash via a command similar to this:
-          # nix-store --query --hash \
-          # $(nix store add-path Mathematica_XX.X.X_BNDL_LINUX.sh --name 'Mathematica_XX.X.X_BNDL_LINUX.sh')
-          sha256 = "095i1z3rc3p5mdaif367k4vcaf4mzcszpbmnva17zm5zxl7y7vl1";
-          message = ''
-            Your override for Mathematica includes a different src for the installer,
-            and it is missing.
-          '';
-          hashMode = "recursive";
-        };
-      })
-      inputs.nh.packages."x86_64-linux".default
-    ]
-    ++ [inputs.zen-browser.packages."${system}".twilight-official];
+  environment.systemPackages = with pkgs; [
+    lan-mouse
+    nomachine-client
+    comma
+    devdocs-desktop
+    unityhub
+    ripgrep
+    (prismlauncher.override {
+      additionalPrograms = [];
+      jdks = [pkgs.jdk23 pkgs.jdk21];
+    })
+    gitkraken
+    evince
+    element-desktop
+    gh
+    gh-copilot
+    libreoffice
+    lmstudio
+    clinfo
+    amdgpu_top
+    en-croissant
+    stockfish
+    adwaita-icon-theme
+    papirus-icon-theme
+    mangohud
+    mangojuice
+    unzip
+    zotero
+    wget
+    openrgb-with-all-plugins
+    vlc
+    udiskie
+    git
+    qbittorrent
+    vlc
+    mesa-demos
+    vulkan-tools
+    thunderbird
+    cacert
+    nss
+    lact
+    vscode-fhs
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+    jellyfin-media-player
+    discord
+    nixd
+    nix-index
+    distrobox
+    alejandra
+    podman-tui
+    lazygit
+    hydra-check
+    #mathematica
+    (mathematica.override {
+      source = pkgs.requireFile {
+        name = "Wolfram_14.2.1_LIN_Bndl.sh";
+        # Get this hash via a command similar to this:
+        # nix-store --query --hash \
+        # $(nix store add-path Mathematica_XX.X.X_BNDL_LINUX.sh --name 'Mathematica_XX.X.X_BNDL_LINUX.sh')
+        sha256 = "095i1z3rc3p5mdaif367k4vcaf4mzcszpbmnva17zm5zxl7y7vl1";
+        message = ''
+          Your override for Mathematica includes a different src for the installer,
+          and it is missing.
+        '';
+        hashMode = "recursive";
+      };
+    })
+    inputs.nh.packages."x86_64-linux".default
+    inputs.zen-browser.packages."${system}".twilight-official
+  ];
   environment.enableAllTerminfo = true;
   environment.sessionVariables = {
     EDITOR = "nvim";
@@ -213,6 +231,52 @@
       host = "0.0.0.0";
       port = 11434;
       environmentVariables = {OLLAMA_MAX_LOADED_MODELS = "1";};
+    };
+    minecraft-servers = {
+      enable = true;
+      eula = true;
+      servers = {
+        private-server = {
+          enable = false;
+          jvmOpts = "-Xms10000M -Xmx24000M";
+          openFirewall = true;
+          package = pkgs.paperServers.paper;
+          whitelist = {
+            lwrig = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
+            BulldakNoodlez = "df74fe63-1948-44c2-8cf1-11a0e5870c44";
+          };
+          serverProperties = {
+            motd = "NixOS Minecraft Server";
+            gamemode = "survival";
+            difficulty = "normal";
+            view-distance = 32;
+            use-native-transport = true;
+          };
+          operators = {
+            uuid = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
+          };
+        };
+        private-server2 = {
+          enable = true;
+          jvmOpts = "-Xms10000M -Xmx16000M";
+          openFirewall = true;
+          package = pkgs.paperServers.paper;
+          whitelist = {
+            lwrig = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
+            BulldakNoodlez = "df74fe63-1948-44c2-8cf1-11a0e5870c44";
+          };
+          serverProperties = {
+            motd = "NixOS Minecraft Server 2";
+            gamemode = "survival";
+            difficulty = "normal";
+            view-distance = 32;
+            use-native-transport = true;
+          };
+          operators = {
+            uuid = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
+          };
+        };
+      };
     };
     fwupd.enable = true;
     udev.extraRules = ''SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
@@ -308,6 +372,7 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = [pkgs.rocmPackages.clr.icd];
     };
     amdgpu = {
       opencl.enable = true;
@@ -328,6 +393,7 @@
     ssh = {
       forwardX11 = true;
       setXAuthLocation = true;
+      startAgent = true;
     };
     nix-ld.enable = false;
     zsh.enable = true;

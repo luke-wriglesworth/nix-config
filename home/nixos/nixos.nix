@@ -274,7 +274,7 @@ in {
     settings = {
       clients = [
         {
-          position = "left";
+          position = "bottom";
           activate_on_startup = true;
           hostname = "lukes-macbook-pro";
           ips = ["100.115.204.63"];

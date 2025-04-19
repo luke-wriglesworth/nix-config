@@ -53,6 +53,7 @@
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = inputs @ {
@@ -64,6 +65,7 @@
     homebrew-core,
     homebrew-cask,
     nixos-hardware,
+    nix-minecraft,
     stylix,
     ...
   }: {
@@ -85,6 +87,7 @@
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
+          nix-minecraft.nixosModules.minecraft-servers
         ];
       };
       nixdeck = nixpkgs.lib.nixosSystem rec {
