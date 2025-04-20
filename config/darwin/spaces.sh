@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "attempting to create workspaces"
 
-# Load service agent with sudo
 sudo yabai --load-sa || { echo "Failed to load service agent"; exit 1; }
 
 num_spaces=$(yabai -m query --spaces | jq length)

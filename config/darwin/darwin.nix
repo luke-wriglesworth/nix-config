@@ -22,7 +22,10 @@
   environment.variables = {
     OLLAMA_HOST = "0.0.0.0";
   };
+
   environment.systemPackages = with pkgs; [
+    utm
+    prismlauncher
     ncurses
     coreutils-full
     nixd
@@ -50,6 +53,10 @@
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+  };
+  launchd.user.agents = {
+    yabai.serviceConfig.Label = "com.koekeishiya.yabai";
+    skhd.serviceConfig.Label = "com.koekeishiya.skhd";
   };
   services = {
     yabai = {
@@ -117,9 +124,9 @@
     dock = {
       autohide = true;
       orientation = "left";
-      show-process-indicators = false;
-      show-recents = false;
-      static-only = true;
+      show-process-indicators = true;
+      show-recents = true;
+      static-only = false;
     };
     finder = {
       AppleShowAllExtensions = true;
