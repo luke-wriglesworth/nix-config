@@ -8,7 +8,7 @@
   system.stateVersion = "24.11";
   imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_cachyos-rc;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -22,9 +22,13 @@
     };
   };
 
+  chaotic = {
+    mesa-git.enable = true;
+  };
+
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/darcula.yaml";
   };
 
   nix = {
@@ -76,14 +80,15 @@
   networking = {
     firewall.enable = false;
     hostName = "nixos";
-    networkmanager.enable = false;
+    networkmanager.enable = true;
     dhcpcd.enable = true;
     dhcpcd.extraConfig = ''nohook resolv.conf'';
     enableIPv6 = true;
   };
 
   environment.systemPackages = with pkgs; [
-    lan-mouse
+    protonvpn-gui
+    lan-mouse_git
     nomachine-client
     comma
     devdocs-desktop
@@ -111,7 +116,6 @@
     unzip
     zotero
     wget
-    openrgb-with-all-plugins
     vlc
     udiskie
     git
@@ -152,7 +156,6 @@
       };
     })
     inputs.nh.packages."x86_64-linux".default
-    inputs.zen-browser.packages."${system}".twilight-official
   ];
   environment.enableAllTerminfo = true;
   environment.sessionVariables = {
@@ -290,6 +293,7 @@
     hardware.openrgb = {
       enable = true;
       motherboard = "amd";
+      package = pkgs.openrgb-with-all-plugins;
     };
     openssh = {
       enable = true;
@@ -301,7 +305,7 @@
         X11Forwarding = true;
         PermitRootLogin = "no";
         PrintMotd = true;
-        PasswordAuthentication = false;
+        PasswordAuthentication = true;
         KbdInteractiveAuthentication = false;
       };
     };
@@ -384,7 +388,7 @@
   users.users.luke = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = ["wheel" "video" "render" "docker" "podman"];
+    extraGroups = ["networkmanager" "wheel" "video" "render" "docker" "podman"];
     home = "/home/luke";
   };
 

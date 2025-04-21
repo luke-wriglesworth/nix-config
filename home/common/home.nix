@@ -7,14 +7,16 @@
 }:
 # Configs common between all machines
 {
-  imports = [inputs.nixvim.homeManagerModules.nixvim inputs.stylix.homeManagerModules.stylix];
-  home.file = {};
+  imports = [
+    inputs.nixvim.homeManagerModules.nixvim
+    inputs.stylix.homeManagerModules.stylix
+  ];
   home.packages = with pkgs; [dust];
   nixpkgs.config.allowUnfree = true;
   stylix = {
     enable = true;
     autoEnable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/darcula.yaml";
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
@@ -59,8 +61,8 @@
 
     zellij = {
       enable = true;
-      enableZshIntegration = false;
-      attachExistingSession = false;
+      enableZshIntegration = true;
+      attachExistingSession = true;
       settings = {
         show_startup_tips = false;
       };

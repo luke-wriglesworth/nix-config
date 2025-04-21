@@ -10,10 +10,14 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixos-artwork = {
+      url = "github:nixos/nixos-artwork/master";
+      flake = false;
+    };
     jovian.url = "github:jovian-experiments/jovian-nixos";
     stylix.url = "github:danth/stylix";
     zen-browser = {
@@ -54,6 +58,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = inputs @ {
@@ -61,6 +66,7 @@
     nixpkgs-pinned,
     nix-darwin,
     nix-homebrew,
+    chaotic,
     jovian,
     homebrew-core,
     homebrew-cask,
@@ -87,13 +93,17 @@
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
+          chaotic.nixosModules.default
           nix-minecraft.nixosModules.minecraft-servers
         ];
       };
       nixdeck = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linu";
         specialArgs = {inherit inputs system;};
-        modules = [./config/steamdeck/configuration.nix ./config/steamdeck/hardware-configuration.nix];
+        modules = [
+          ./config/steamdeck/configuration.nix
+          ./config/steamdeck/hardware-configuration.nix
+        ];
       };
     };
     darwinConfigurations = {

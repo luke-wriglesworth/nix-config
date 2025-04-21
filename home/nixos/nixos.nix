@@ -9,8 +9,13 @@
   background = "#${config.lib.stylix.colors.base00}";
   background-alt = "#${config.lib.stylix.colors.base01}";
   foreground = "#${config.lib.stylix.colors.base05}";
+  wallpaper_path = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black_8k.png";
 in {
-  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel inputs.lan-mouse.homeManagerModules.default];
+  imports = [
+    inputs.hyprpanel.homeManagerModules.hyprpanel
+    inputs.lan-mouse.homeManagerModules.default
+    inputs.zen-browser.homeModules.twilight
+  ];
   home.pointerCursor = {
     gtk.enable = true;
     name = "Adwaita";
@@ -43,8 +48,8 @@ in {
     settings = {
       ipc = "on";
       splash = false;
-      preload = ["/home/luke/Pictures/nixos.png"];
-      wallpaper = ["DP-3,/home/luke/Pictures/nixos.png"];
+      preload = [wallpaper_path];
+      wallpaper = ["DP-3,${wallpaper_path}"];
     };
   };
 
@@ -284,6 +289,15 @@ in {
     };
   };
 
+  programs.zen-browser = {
+    enable = true;
+    nativeMessagingHosts = [pkgs.firefoxpwa];
+    policies = {
+      DisableTelemetry = true;
+      DisableAppUpdate = true;
+    };
+  };
+
   programs.fuzzel = {
     enable = true;
     settings = {
@@ -302,6 +316,7 @@ in {
       };
     };
   };
+
   programs.hyprpanel = {
     enable = true;
     overlay.enable = true;
