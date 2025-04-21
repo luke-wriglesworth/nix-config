@@ -13,8 +13,27 @@
     inputs.jovian.nixosModules.default
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = ["root" "luke"];
+  nix = {
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    package = pkgs.nixVersions.latest;
+    distributedBuilds = true;
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "luke"];
+      builders-use-substitutes = true;
+    };
+    buildMachines = [
+      {
+        hostName = "nixos";
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+        maxJobs = 24;
+        speedFactor = 10;
+        supportedFeatures = ["benchmark" "big-parallel" "kvm" "nixos-test" "gccarch-znver4" "gccarch-native"];
+        mandatoryFeatures = [];
+      }
+    ];
+  };
 
   # jovian
   jovian = {
@@ -143,7 +162,7 @@
     home-manager
     nh
     prismlauncher
-    emulationstation
+    pegasus-frontend
     mgba
     rtorrent
     links2
