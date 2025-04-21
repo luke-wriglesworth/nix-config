@@ -17,7 +17,7 @@
         ibm-plex
         jetbrains-mono
       ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerdfonts);
   };
   environment.variables = {
     OLLAMA_HOST = "0.0.0.0";
@@ -55,12 +55,12 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
   launchd.user.agents = {
-    yabai.serviceConfig.Label = "com.koekeishiya.yabai";
-    skhd.serviceConfig.Label = "com.koekeishiya.skhd";
+    #yabai.serviceConfig.Label = "com.koekeishiya.yabai";
+    #skhd.serviceConfig.Label = "com.koekeishiya.skhd";
   };
   services = {
     yabai = {
-      enable = true;
+      enable = false;
       enableScriptingAddition = true;
       config = {
         layout = "bsp";
@@ -76,7 +76,7 @@
       };
     };
     skhd = {
-      enable = true;
+      enable = false;
       skhdConfig = ''
             alt - h : yabai -m window --focus west
             alt - j : yabai -m window --focus south
@@ -102,7 +102,7 @@
       '';
     };
 
-    jankyborders.enable = true;
+    jankyborders.enable = false;
     tailscale = {
       enable = true;
     };
