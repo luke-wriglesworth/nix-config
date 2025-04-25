@@ -9,12 +9,12 @@
   background = "#${config.lib.stylix.colors.base00}";
   background-alt = "#${config.lib.stylix.colors.base01}";
   foreground = "#${config.lib.stylix.colors.base05}";
-  wallpaper_path = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black_8k.png";
+  wallpaper_path = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-blue.png";
 in {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.lan-mouse.homeManagerModules.default
-    inputs.zen-browser.homeModules.twilight
+    inputs.zen-browser.homeModules.beta
   ];
   home.pointerCursor = {
     gtk.enable = true;
@@ -188,7 +188,7 @@ in {
         "$mod, q, exec, uwsm app -- $terminal"
         "$mod, c, killactive"
         "$mod, e, exec, uwsm app -- ${pkgs.xfce.thunar}/bin/thunar"
-        "$mod, b, exec, uwsm app -- zen-twilight"
+        "$mod, b, exec, uwsm app -- zen"
         "$mod SHIFT, e, exit"
         "$mod SHIFT, l, exec, uwsm app -- ${pkgs.hyprlock}/bin/hyprlock"
 
@@ -292,10 +292,6 @@ in {
   programs.zen-browser = {
     enable = true;
     nativeMessagingHosts = [pkgs.firefoxpwa];
-    policies = {
-      DisableTelemetry = true;
-      DisableAppUpdate = true;
-    };
   };
 
   programs.fuzzel = {

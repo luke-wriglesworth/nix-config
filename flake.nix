@@ -22,7 +22,7 @@
     stylix.url = "github:danth/stylix/release-24.11";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
@@ -58,7 +58,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = inputs @ {
@@ -66,7 +65,6 @@
     nixpkgs-pinned,
     nix-darwin,
     nix-homebrew,
-    chaotic,
     jovian,
     homebrew-core,
     homebrew-cask,
@@ -93,7 +91,6 @@
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
-          chaotic.nixosModules.default
           nix-minecraft.nixosModules.minecraft-servers
         ];
       };

@@ -8,7 +8,7 @@
   system.stateVersion = "24.11";
   imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-rc;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -22,13 +22,9 @@
     };
   };
 
-  chaotic = {
-    mesa-git.enable = true;
-  };
-
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/darcula.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
   };
 
   nix = {
@@ -87,8 +83,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    protonvpn-gui
-    lan-mouse_git
+    lan-mouse
     nomachine-client
     comma
     devdocs-desktop
@@ -140,21 +135,21 @@
     podman-tui
     lazygit
     hydra-check
-    #mathematica
-    (mathematica.override {
-      source = pkgs.requireFile {
-        name = "Wolfram_14.2.1_LIN_Bndl.sh";
-        # Get this hash via a command similar to this:
-        # nix-store --query --hash \
-        # $(nix store add-path Mathematica_XX.X.X_BNDL_LINUX.sh --name 'Mathematica_XX.X.X_BNDL_LINUX.sh')
-        sha256 = "095i1z3rc3p5mdaif367k4vcaf4mzcszpbmnva17zm5zxl7y7vl1";
-        message = ''
-          Your override for Mathematica includes a different src for the installer,
-          and it is missing.
-        '';
-        hashMode = "recursive";
-      };
-    })
+    mathematica
+    #(mathematica.override {
+    #  source = pkgs.requireFile {
+    #    name = "Wolfram_14.2.1_LIN_Bndl.sh";
+    #    # Get this hash via a command similar to this:
+    #    # nix-store --query --hash \
+    #    # $(nix store add-path Mathematica_XX.X.X_BNDL_LINUX.sh --name 'Mathematica_XX.X.X_BNDL_LINUX.sh')
+    #    sha256 = "095i1z3rc3p5mdaif367k4vcaf4mzcszpbmnva17zm5zxl7y7vl1";
+    #    message = ''
+    #      Your override for Mathematica includes a different src for the installer,
+    #      and it is missing.
+    #    '';
+    #    hashMode = "recursive";
+    #  };
+    #})
     inputs.nh.packages."x86_64-linux".default
   ];
   environment.enableAllTerminfo = true;
@@ -229,7 +224,7 @@
     ollama = {
       enable = true;
       acceleration = "rocm";
-      rocmOverrideGfx = "10.3.1";
+      rocmOverrideGfx = "10.3.0";
       openFirewall = true;
       host = "0.0.0.0";
       port = 11434;
@@ -376,7 +371,6 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = [pkgs.rocmPackages.clr.icd];
     };
     amdgpu = {
       opencl.enable = true;
