@@ -141,7 +141,6 @@
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.ssh = {
     startAgent = true;
