@@ -10,7 +10,7 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
@@ -88,9 +88,10 @@
           };
         };
         modules = [
-          ./config/nixos/configuration.nix
-          ./config/nixos/hyprland.nix
-          ./config/nixos/hardware-configuration.nix
+          ./hosts/nixos/configuration.nix
+          ./hosts/nixos/hardware-configuration.nix
+          ./hosts/nixos/packages.nix
+          ./nixosModules/guiApps/hyprland.nix
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
@@ -101,8 +102,8 @@
         system = "x86_64-linu";
         specialArgs = {inherit inputs system;};
         modules = [
-          ./config/steamdeck/configuration.nix
-          ./config/steamdeck/hardware-configuration.nix
+          ./hosts/steamdeck/configuration.nix
+          ./hosts/steamdeck/hardware-configuration.nix
         ];
       };
     };
@@ -111,7 +112,7 @@
         system = "aarch64-darwin";
         specialArgs = {inherit inputs;};
         modules = [
-          ./config/darwin/darwin.nix
+          ./hosts/darwin/darwin.nix
           nix-homebrew.darwinModules.nix-homebrew
           stylix.darwinModules.stylix
           {
@@ -141,8 +142,9 @@
             home.homeDirectory = "/home/luke";
             home.stateVersion = "24.11";
           }
-          ./home/common/home.nix
-          ./home/nixos/nixos.nix
+          ./homeManagerModules
+          ./hosts/nixos/home.nix
+          stylix.homeManagerModules.stylix
         ];
       };
       "luke@nixdeck" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -154,7 +156,9 @@
             home.homeDirectory = "/home/luke";
             home.stateVersion = "24.11";
           }
-          ./home/common/home.nix
+          ./homeManagerModules
+          ./hosts/steamdeck/home.nix
+          stylix.homeManagerModules.stylix
         ];
       };
       "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -166,8 +170,9 @@
             home.homeDirectory = "/Users/lukewriglesworth";
             home.stateVersion = "25.05";
           }
-          ./home/common/home.nix
-          ./home/darwin/darwin.nix
+          ./homeManagerModules
+          ./hosts/darwin/home.nix
+          stylix.homeManagerModules.stylix
         ];
       };
     };

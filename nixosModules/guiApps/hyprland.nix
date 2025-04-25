@@ -30,8 +30,8 @@ in {
     hyprland = {
       enable = true;
       xwayland.enable = true;
-      #package = hyprland-git.hyprland;
-      #portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
+      package = hyprland-git.hyprland;
+      portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
       withUWSM = true;
     };
     uwsm = {

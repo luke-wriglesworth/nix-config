@@ -1024,11 +1024,11 @@
     },
     "nixpkgs-darwin": {
       "locked": {
-        "lastModified": 1745599318,
-        "narHash": "sha256-He0C4zG9fBnQCf2yrX+IeI2eN/jrUWRME24mIHQAWmo=",
+        "lastModified": 1745601035,
+        "narHash": "sha256-8e01Pl2rHmzrEPgA1aCDl35hVtEc0f3TbsWVmSVg/Xc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1429ee316417049e13c540e4788750b98e1530ed",
+        "rev": "ff0e1b3d462c6741833a884dbd38bc6ea9a882b1",
         "type": "github"
       },
       "original": {
@@ -1101,32 +1101,16 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1745599318,
-        "narHash": "sha256-He0C4zG9fBnQCf2yrX+IeI2eN/jrUWRME24mIHQAWmo=",
+        "lastModified": 1745601035,
+        "narHash": "sha256-8e01Pl2rHmzrEPgA1aCDl35hVtEc0f3TbsWVmSVg/Xc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1429ee316417049e13c540e4788750b98e1530ed",
+        "rev": "ff0e1b3d462c6741833a884dbd38bc6ea9a882b1",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_6": {
-      "locked": {
-        "lastModified": 1743703532,
-        "narHash": "sha256-s1KLDALEeqy+ttrvqV3jx9mBZEvmthQErTVOAzbjHZs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "bdb91860de2f719b57eef819b5617762f7120c70",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1282,7 +1266,9 @@
         "git-hooks": "git-hooks",
         "gnome-shell": "gnome-shell",
         "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "systems": "systems_5",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",

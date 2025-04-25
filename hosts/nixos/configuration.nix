@@ -6,7 +6,6 @@
   ...
 }: {
   system.stateVersion = "24.11";
-  imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
