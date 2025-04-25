@@ -22,7 +22,7 @@
     stylix.url = "github:danth/stylix/release-24.11";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
