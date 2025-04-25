@@ -1,18 +1,15 @@
 {
   pkgs,
-  inputs,
-  config,
   lib,
   ...
 }: {
-  hyprpanel.enable = true;
+  ## Custom Nix Modules ##
   hyprland.enable = true;
+  hyprpanel.enable = true;
+  lan-mouse.enable = false;
+  zen-browser.enable = true;
+  ########################
 
-  imports = [
-    inputs.hyprpanel.homeManagerModules.hyprpanel
-    inputs.lan-mouse.homeManagerModules.default
-    inputs.zen-browser.homeModules.beta
-  ];
   home.pointerCursor = lib.mkDefault {
     gtk.enable = true;
     name = "Adwaita";
@@ -60,27 +57,6 @@
       ExecStart = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
     };
     Install = {WantedBy = ["graphical-session.target"];};
-  };
-
-  programs.lan-mouse = {
-    enable = true;
-    systemd = true;
-    settings = {
-      clients = [
-        {
-          position = "bottom";
-          activate_on_startup = true;
-          hostname = "lukes-macbook-pro";
-          ips = ["100.115.204.63"];
-          port = 4242;
-        }
-      ];
-    };
-  };
-
-  programs.zen-browser = {
-    enable = true;
-    nativeMessagingHosts = [pkgs.firefoxpwa];
   };
 
   programs.fuzzel = {

@@ -5,6 +5,10 @@
   pkgs-pinned,
   ...
 }: {
+  ## Custom Nix Modules ##
+  hyprland.enable = true;
+  ########################
+
   system.stateVersion = "24.11";
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

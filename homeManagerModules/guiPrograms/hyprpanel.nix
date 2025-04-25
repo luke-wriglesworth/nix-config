@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  inputs,
   ...
 }: let
   accent = "#${config.lib.stylix.colors.base0D}";
@@ -9,6 +10,7 @@
   background-alt = "#${config.lib.stylix.colors.base01}";
   foreground = "#${config.lib.stylix.colors.base05}";
 in {
+  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel];
   options.hyprpanel.enable = lib.mkEnableOption "Enables hyprpanel configuration";
   config = lib.mkIf config.hyprpanel.enable {
     programs.hyprpanel = {

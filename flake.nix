@@ -91,7 +91,7 @@
           ./hosts/nixos/configuration.nix
           ./hosts/nixos/hardware-configuration.nix
           ./hosts/nixos/packages.nix
-          ./nixosModules/guiApps/hyprland.nix
+          ./nixosModules
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
@@ -99,7 +99,7 @@
         ];
       };
       nixdeck = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linu";
+        system = "x86_64-linux";
         specialArgs = {inherit inputs system;};
         modules = [
           ./hosts/steamdeck/configuration.nix
@@ -144,7 +144,6 @@
           }
           ./homeManagerModules
           ./hosts/nixos/home.nix
-          stylix.homeManagerModules.stylix
         ];
       };
       "luke@nixdeck" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -158,7 +157,6 @@
           }
           ./homeManagerModules
           ./hosts/steamdeck/home.nix
-          stylix.homeManagerModules.stylix
         ];
       };
       "lukewriglesworth@Lukes-MacBook-Pro" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -172,7 +170,6 @@
           }
           ./homeManagerModules
           ./hosts/darwin/home.nix
-          stylix.homeManagerModules.stylix
         ];
       };
     };

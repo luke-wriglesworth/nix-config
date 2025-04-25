@@ -5,6 +5,7 @@
   lib,
   ...
 }: {
+  imports = [inputs.stylix.homeManagerModules.stylix];
   options.stylixConfig.enable = lib.mkEnableOption "Enables stylix configuration";
   config = lib.mkIf config.stylixConfig.enable {
     stylix = {
