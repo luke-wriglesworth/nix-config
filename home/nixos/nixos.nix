@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  lib,
   ...
 }: let
   accent = "#${config.lib.stylix.colors.base0D}";
@@ -9,14 +10,13 @@
   background = "#${config.lib.stylix.colors.base00}";
   background-alt = "#${config.lib.stylix.colors.base01}";
   foreground = "#${config.lib.stylix.colors.base05}";
-  wallpaper_path = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-blue.png";
 in {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.lan-mouse.homeManagerModules.default
     inputs.zen-browser.homeModules.beta
   ];
-  home.pointerCursor = {
+  home.pointerCursor = lib.mkDefault {
     gtk.enable = true;
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
@@ -48,8 +48,6 @@ in {
     settings = {
       ipc = "on";
       splash = false;
-      preload = [wallpaper_path];
-      wallpaper = ["DP-3,${wallpaper_path}"];
     };
   };
 

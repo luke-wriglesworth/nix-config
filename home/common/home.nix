@@ -17,6 +17,12 @@
     enable = true;
     autoEnable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+    image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black.png";
+    #cursor = {
+    #  size = 28;
+    #  name = "Adwaita";
+    #  package = lib.mkDefault pkgs.adwaita-icon-theme;
+    #cursor = null;
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
