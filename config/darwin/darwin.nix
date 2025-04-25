@@ -17,7 +17,7 @@
         ibm-plex
         jetbrains-mono
       ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerdfonts);
+      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   };
   environment.variables = {
     OLLAMA_HOST = "0.0.0.0";
@@ -111,11 +111,9 @@
   homebrew = {
     enable = true;
     casks = [
-      "nomachine"
       "raycast"
       "ollama"
       "ghostty"
-      "rustdesk"
     ];
   };
   system.startup.chime = false;

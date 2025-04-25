@@ -10,8 +10,8 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
     nixos-artwork = {
@@ -25,7 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {
