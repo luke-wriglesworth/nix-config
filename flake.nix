@@ -104,6 +104,7 @@
         modules = [
           ./config/steamdeck/configuration.nix
           ./config/steamdeck/hardware-configuration.nix
+          ./nixosModules
           jovian.nixosModules.default
         ];
       };
