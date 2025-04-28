@@ -10,7 +10,9 @@
     ./cliPrograms/neovim.nix
     ./cliPrograms/zsh.nix
     ./cliPrograms/stylix.nix
+    ./cliPrograms/lan-mouse.nix
     ./guiPrograms/wezterm.nix
+    ./guiPrograms/zen-browser.nix
     ./guiPrograms/hyprpanel.nix
     ./guiPrograms/hyprland.nix
   ];

@@ -5,8 +5,8 @@
   ...
 }: {
   options.lan-mouse.enable = lib.mkEnableOption "Enables lan-mouse configuration";
+  imports = [inputs.lan-mouse.homeManagerModules.default];
   config = lib.mkIf config.lan-mouse.enable {
-    imports = [inputs.lan-mouse.homeManagerModules.default];
     programs.lan-mouse = {
       enable = true;
       systemd = true;
