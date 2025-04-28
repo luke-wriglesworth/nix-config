@@ -10,7 +10,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.jovian.nixosModules.default
+    #inputs.jovian.nixosModules.default
   ];
 
   nix = {

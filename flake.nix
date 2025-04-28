@@ -102,8 +102,9 @@
         system = "x86_64-linux";
         specialArgs = {inherit inputs system;};
         modules = [
-          ./hosts/steamdeck/configuration.nix
-          ./hosts/steamdeck/hardware-configuration.nix
+          ./config/steamdeck/configuration.nix
+          ./config/steamdeck/hardware-configuration.nix
+          jovian.nixosModules.default
         ];
       };
     };
