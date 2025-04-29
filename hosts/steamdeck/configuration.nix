@@ -73,7 +73,29 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager = {
+      enable = true;
+      dns = "dnsmasq";
+      settings = {
+        "global-dns-domain-*" = {
+          "servers" = "1.1.1.1,1.0.0.1,2606:4700:4700::1111,2606:4700:4700::1001";
+        };
+      };
+      ensureProfiles.profiles = {
+        "Ethernet Connection" = {
+          connection.type = "ethernet";
+          connection.id = "Ethernet Connection";
+          connection.interface-name = "enp4s0f3u1";
+          connection.autoconnect = true;
+          ipv4.method = "manual";
+          ipv4.addresses = "10.0.0.184";
+          ipv4.gateway = "10.0.0.1";
+          ipv4.ignore-auto-dns = true;
+        };
+      };
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
