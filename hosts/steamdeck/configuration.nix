@@ -175,6 +175,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    steamdeck-firmware
+    jupiter-dock-updater-bin
     git
     lazygit
     gh
