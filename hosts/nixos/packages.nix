@@ -18,6 +18,7 @@
     evince
     element-desktop
     gh
+    obsidian
     gh-copilot
     libreoffice
     lmstudio

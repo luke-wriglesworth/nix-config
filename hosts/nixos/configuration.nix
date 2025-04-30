@@ -75,16 +75,42 @@
     "en_US.UTF-8/UTF-8"
   ];
   zramSwap.enable = true;
-
   networking = {
     firewall.enable = false;
+    resolvconf.enable = false;
     hostName = "nixos";
-    networkmanager.enable = true;
+    networkmanager = {
+      dns = "dnsmasq";
+      enable = true;
+      settings = {
+        "global-dns-domain-*" = {
+          "servers" = "1.1.1.1,1.0.0.1,2606:4700:4700::1111,2606:4700:4700::1001";
+        };
+      };
+      ensureProfiles.profiles = {
+        "Ethernet Connection" = {
+          connection.type = "ethernet";
+          connection.id = "Ethernet Connection";
+          connection.interface-name = "enp8s0";
+          connection.autoconnect = true;
+          ipv4 = {
+            method = "manual";
+            ignore-auto-dns = true;
+            addresses = "10.0.0.194";
+            gateway = "10.0.0.1";
+          };
+        };
+      };
+    };
     dhcpcd.enable = true;
     dhcpcd.extraConfig = ''nohook resolv.conf'';
     enableIPv6 = true;
   };
 
+  environment.etc = {
+    "NetworkManager/dnsmasq.d/cache.conf".text = "cache-size=1000";
+    "NetworkManager/dnsmasq.d/ipv6-listen.conf".text = "listen-address=::1";
+  };
   environment.enableAllTerminfo = true;
   environment.sessionVariables = {
     EDITOR = "nvim";
@@ -249,15 +275,6 @@
             "default.clock.allowed-rates" = [44100 48000 88200 96000 176400 192000];
           };
         };
-      };
-    };
-    dnsmasq = {
-      enable = true;
-      resolveLocalQueries = true;
-      settings = {
-        cache-size = 1000;
-        bind-interfaces = true;
-        server = ["1.1.1.1" "1.0.0.1"];
       };
     };
   };
