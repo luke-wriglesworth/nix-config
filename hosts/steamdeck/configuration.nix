@@ -57,7 +57,10 @@
       user = "luke";
     };
     steamos = {
+      useSteamOSConfig = true;
       enableAutoMountUdevRules = true;
+      enableMesaPatches = true;
+      enableZram = true;
     };
   };
 
@@ -177,6 +180,7 @@
   environment.systemPackages = with pkgs; [
     steamdeck-firmware
     jupiter-dock-updater-bin
+    moonlight-qt
     git
     lazygit
     gh
