@@ -11,7 +11,7 @@
     stylix = {
       enable = true;
       autoEnable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
       image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black.png";
       #cursor = {
       #  size = 28;
