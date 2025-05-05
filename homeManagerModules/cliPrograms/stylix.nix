@@ -10,6 +10,7 @@
   config = lib.mkIf config.stylixConfig.enable {
     stylix = {
       enable = true;
+      targets.mako.enable = false;
       autoEnable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
       image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black.png";

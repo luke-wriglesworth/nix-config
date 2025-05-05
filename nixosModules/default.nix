@@ -4,5 +4,8 @@
   pkgs,
   ...
 }: {
-  imports = [guiPrograms/hyprland.nix];
+  imports = [
+    guiPrograms/hyprland.nix
+    cliPrograms/minecraft_server.nix
+  ];
 }

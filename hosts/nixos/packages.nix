@@ -7,6 +7,7 @@
     lan-mouse
     nomachine-client
     comma
+    calibre
     devdocs-desktop
     unityhub
     ripgrep
