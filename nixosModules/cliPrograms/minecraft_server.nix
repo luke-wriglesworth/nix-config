@@ -5,6 +5,7 @@
   config,
   ...
 }: {
+  imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
   options = {
     minecraft_server.enable = lib.mkEnableOption "Enables Minecraft server";
   };

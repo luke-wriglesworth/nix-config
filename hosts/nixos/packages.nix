@@ -15,6 +15,7 @@
       additionalPrograms = [];
       jdks = [pkgs.jdk23 pkgs.jdk21];
     })
+    bitwarden
     gitkraken
     evince
     element-desktop
@@ -51,6 +52,7 @@
     jellyfin-ffmpeg
     jellyfin-media-player
     discord
+    vesktop
     nixd
     nix-index
     distrobox

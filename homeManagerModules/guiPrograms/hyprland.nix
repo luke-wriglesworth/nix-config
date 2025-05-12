@@ -179,10 +179,6 @@
 
           # Clipboard
           "$mod ALT, v, exec, pkill fuzzel || cliphist list | fuzzel --no-fuzzy --dmenu | cliphist decode | wl-copy"
-
-          # Screencapture
-          "$mod, S, exec, ${pkgs.grim}/bin/grim | wl-copy"
-          "$mod SHIFT+ALT, S, exec, ${pkgs.grim}/bin/grim -g \"$(slurp)\" - | ${pkgs.swappy}/bin/swappy -f -"
         ];
 
         bindm = [

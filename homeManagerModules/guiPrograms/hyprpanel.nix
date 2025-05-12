@@ -17,14 +17,14 @@ in {
       enable = true;
       overlay.enable = true;
       hyprland.enable = true;
-      overwrite.enable = true;
+      overwrite.enable = false;
       settings = {
         layout = {
           "bar.layouts" = {
             "0" = {
               left = ["dashboard" "workspaces" "windowtitle"];
-              middle = ["media" "cava"];
-              right = ["volume" "cpu" "ram" "systray" "bluetooth" "clock" "notifications"];
+              middle = ["weather" "clock" "media" "cava" "volume"];
+              right = ["notifications" "cputemp" "cpu" "ram" "bluetooth" "systray"];
             };
           };
         };
@@ -38,11 +38,16 @@ in {
             military = true;
             hideSeconds = true;
           };
-          weather.unit = "metric";
+          weather = {
+            unit = "metric";
+            location = "Toronto";
+          };
         };
         menus.dashboard.directories.enabled = false;
         menus.dashboard.stats.enable_gpu = false;
-        menus.dashboard.shortcuts.enabled = false;
+        menus.dashboard.shortcuts.enabled = true;
+        bar.customModules.cpuTemp.sensor = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input";
+        bar.customModules.weather.unit = "metric";
         theme.bar = {
           transparent = false;
           scaling = 80;
