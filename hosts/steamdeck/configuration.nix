@@ -16,17 +16,20 @@
     package = pkgs.nixVersions.latest;
     distributedBuilds = true;
     settings = {
+      max-jobs = 0;
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["root" "luke"];
       builders-use-substitutes = true;
     };
     buildMachines = [
       {
+        sshUser = "luke";
         hostName = "nixos";
+        sshKey = "/home/luke/.ssh/nixos";
         system = "x86_64-linux";
         protocol = "ssh-ng";
         maxJobs = 24;
-        speedFactor = 10;
+        speedFactor = 100;
         supportedFeatures = ["benchmark" "big-parallel" "kvm" "nixos-test" "gccarch-znver4" "gccarch-native"];
         mandatoryFeatures = [];
       }
@@ -57,9 +60,7 @@
       user = "luke";
     };
     steamos = {
-      useSteamOSConfig = true;
       enableAutoMountUdevRules = true;
-      enableMesaPatches = true;
       enableZram = true;
     };
   };
@@ -191,7 +192,7 @@
     mgba
     rtorrent
     links2
-    inputs.zen-browser.packages."${system}".twilight-official
+    inputs.zen-browser.packages."${system}".twilight
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
