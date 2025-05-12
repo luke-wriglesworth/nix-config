@@ -20,7 +20,7 @@
           enable = false;
           jvmOpts = "-Xms10000M -Xmx24000M";
           openFirewall = true;
-          package = pkgs.paperServers.paper;
+          package = pkgs.papermcServers.papermc;
           whitelist = {
             lwrig = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
             BulldakNoodlez = "df74fe63-1948-44c2-8cf1-11a0e5870c44";
@@ -40,7 +40,7 @@
           enable = true;
           jvmOpts = "-Xms10000M -Xmx16000M";
           openFirewall = true;
-          package = pkgs.paperServers.paper;
+          package = pkgs.papermcServers.papermc;
           whitelist = {
             lwrig = "ad2e45de-c695-4ffd-adae-bb1ebbe8e726";
             BulldakNoodlez = "df74fe63-1948-44c2-8cf1-11a0e5870c44";
