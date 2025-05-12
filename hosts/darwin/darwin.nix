@@ -24,6 +24,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    bitwarden
     utm
     prismlauncher
     ncurses
