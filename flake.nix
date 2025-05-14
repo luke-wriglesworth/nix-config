@@ -68,7 +68,6 @@
     nixpkgs-pinned,
     nix-darwin,
     nix-homebrew,
-    nix-minecraft,
     jovian,
     homebrew-core,
     homebrew-cask,
