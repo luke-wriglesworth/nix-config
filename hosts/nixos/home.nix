@@ -45,20 +45,6 @@
     };
   };
 
-  systemd.user.services.ulauncher = {
-    Unit = {
-      Description = "Ulauncher service";
-      Documentation = "https://ulauncher.io/";
-    };
-    Service = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 1;
-      ExecStart = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
-    };
-    Install = {WantedBy = ["graphical-session.target"];};
-  };
-
   programs.fuzzel = {
     enable = true;
     settings = {

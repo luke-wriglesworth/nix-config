@@ -174,8 +174,8 @@
           "$mod, j, movefocus, d"
 
           # Applications
-          #"$mod, r, exec, pkill fuzzel || uwsm app -- ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
-          "$mod, r, exec, uwsm app -- ${pkgs.ulauncher}/bin/ulauncher-toggle"
+          "$mod, r, exec, pkill fuzzel || uwsm app -- ${pkgs.fuzzel}/bin/fuzzel --launch-prefix='/run/current-system/sw/bin/uwsm app -- '"
+          #"$mod, r, exec, uwsm app -- ${pkgs.fuzzel}/bin/fuzzel"
 
           # Clipboard
           "$mod ALT, v, exec, pkill fuzzel || cliphist list | fuzzel --no-fuzzy --dmenu | cliphist decode | wl-copy"

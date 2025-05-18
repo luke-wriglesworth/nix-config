@@ -149,6 +149,16 @@
   };
 
   services = {
+    searx = {
+      enable = true;
+      redisCreateLocally = true;
+      environmentFile = "/home/luke/.searxng.env";
+      settings.server = {
+        port = 8081;
+        bind_address = "::1";
+      };
+      settings.search.formats = ["html" "json"];
+    };
     tailscale = {
       enable = true;
       useRoutingFeatures = "both";
