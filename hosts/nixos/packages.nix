@@ -23,6 +23,7 @@
     obsidian
     gh-copilot
     libreoffice
+    lact
     lmstudio
     clinfo
     amdgpu_top
@@ -45,7 +46,6 @@
     thunderbird
     cacert
     nss
-    lact
     vscode-fhs
     jellyfin
     jellyfin-web

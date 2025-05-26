@@ -9,9 +9,11 @@
   hyprland.enable = true;
   ########################
 
+  chaotic.mesa-git.enable = true;
+
   system.stateVersion = "24.11";
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_cachyos-rc;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -186,7 +188,7 @@
     udev.extraRules = ''SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
     udisks2.enable = true;
     open-webui = {
-      enable = true;
+      enable = false;
       host = "0.0.0.0";
       port = 8080;
       openFirewall = true;

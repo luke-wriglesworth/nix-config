@@ -10,7 +10,7 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:luke-wriglesworth/nixpkgs/master";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
@@ -61,6 +61,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = inputs @ {
@@ -69,6 +70,7 @@
     nix-darwin,
     nix-homebrew,
     jovian,
+    chaotic,
     homebrew-core,
     homebrew-cask,
     nixos-hardware,
@@ -91,6 +93,7 @@
           ./hosts/nixos/hardware-configuration.nix
           ./hosts/nixos/packages.nix
           ./nixosModules
+          chaotic.nixosModules.default
           stylix.nixosModules.stylix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-ssd
