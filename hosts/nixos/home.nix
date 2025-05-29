@@ -24,14 +24,12 @@
       package = pkgs.gnome-themes-extra;
     };
   };
-
   dconf = {
     settings = {
       "org/gnome/desktop/interface" = {
       };
     };
   };
-
   services.cliphist = {
     enable = true;
     allowImages = true;
@@ -44,7 +42,6 @@
       splash = false;
     };
   };
-
   programs.fuzzel = {
     enable = true;
     settings = {

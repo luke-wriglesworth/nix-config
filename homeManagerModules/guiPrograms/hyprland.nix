@@ -6,11 +6,21 @@
 }: {
   options.hyprland.enable = lib.mkEnableOption "Enables Hyprland configuration";
   config = lib.mkIf config.hyprland.enable {
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        ipc = "on";
+        preload = ["/home/luke/nix-config/homeManagerModules/cliPrograms/nixos.png"];
+        wallpaper = ["DP-1, /home/luke/nix-config/homeManagerModules/cliPrograms/nixos.png"];
+      };
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
       systemd.enable = true;
       systemd.extraCommands = ["systemctl --user start hyprpolkitagent"];
+      systemd.variables = ["--all"];
       package = null;
       portalPackage = null;
       settings = {
@@ -18,11 +28,16 @@
         "$mod" = "SUPER";
 
         monitor = [
-          "DP-3,2560x1440@164.96,auto,1.0"
+          "DP-1, 2560x1440@164.96, 0x0, 1"
         ];
 
         xwayland = {
           force_zero_scaling = true;
+        };
+
+        # gamescope fix
+        debug = {
+          full_cm_proto = true;
         };
 
         general = {

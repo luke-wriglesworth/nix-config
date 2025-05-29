@@ -26,14 +26,21 @@
       "fs.inotify.max_queued_events" = 32768; # default: 16384
     };
   };
-
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-  };
-
   nix = {
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    registry = {
+      nixpkgs = {
+        flake = inputs.nixpkgs;
+        to = {
+          type = "path";
+          path = pkgs.path;
+        };
+      };
+    };
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs.outPath}"
+      "nixos-config=/home/luke/nix-config/hosts/nixos/configuration.nix"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
     package = pkgs.nixVersions.latest;
     settings = {
       cores = 24;
@@ -93,7 +100,7 @@
   };
 
   environment.etc = {
-    "NetworkManager/dnsmasq.d/cache.conf".text = "cache-size=1000";
+    "NetworkManager/dnsmasq.d/cache.conf".text = "cache-size=50000";
     "NetworkManager/dnsmasq.d/ipv6-listen.conf".text = "listen-address=::1";
   };
   environment.enableAllTerminfo = true;
@@ -151,6 +158,9 @@
   };
 
   services = {
+    tika = {
+      enable = true;
+    };
     searx = {
       enable = true;
       redisCreateLocally = true;
@@ -176,9 +186,9 @@
       user = "luke";
     };
     ollama = {
-      enable = true;
-      acceleration = "rocm";
-      rocmOverrideGfx = "10.3.0";
+      enable = false;
+      #acceleration = "rocm";
+      #rocmOverrideGfx = "12.0.1";
       openFirewall = true;
       host = "0.0.0.0";
       port = 11434;
@@ -188,7 +198,7 @@
     udev.extraRules = ''SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3633", MODE="0666" '';
     udisks2.enable = true;
     open-webui = {
-      enable = false;
+      enable = true;
       host = "0.0.0.0";
       port = 8080;
       openFirewall = true;
@@ -286,6 +296,10 @@
   };
 
   programs = {
+    gamescope = {
+      enable = true;
+      package = inputs.chaotic.packages.x86_64-linux.gamescope_git;
+    };
     xwayland.enable = true;
     ssh = {
       forwardX11 = true;
@@ -297,7 +311,6 @@
     appimage.enable = true;
     steam = {
       enable = true;
-      gamescopeSession.enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;

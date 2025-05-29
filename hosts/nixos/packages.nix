@@ -22,7 +22,8 @@
     gh
     obsidian
     gh-copilot
-    libreoffice
+    nix-output-monitor
+    #libreoffice
     lact
     lmstudio
     clinfo

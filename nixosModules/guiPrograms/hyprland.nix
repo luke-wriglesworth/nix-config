@@ -26,12 +26,10 @@ in {
       pkgs.hyprsunset
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     ];
-
     nix.settings = {
       substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
-
     programs = {
       hyprland = {
         enable = true;
@@ -40,19 +38,8 @@ in {
         portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
         withUWSM = true;
       };
-      uwsm = {
-        enable = true;
-        waylandCompositors = {
-          hyprland = {
-            prettyName = "Hyprland";
-            comment = "Hyprland compositor managed by UWSM";
-            binPath = "/run/current-system/sw/bin/Hyprland";
-          };
-        };
-      };
       dconf.enable = true;
     };
-
     qt = {
       enable = true;
     };

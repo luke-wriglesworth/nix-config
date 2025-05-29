@@ -13,7 +13,7 @@
       targets.mako.enable = false;
       autoEnable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-      image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-binary-black.png";
+      image = ./nixos.png;
       #cursor = {
       #  size = 28;
       #  name = "Adwaita";

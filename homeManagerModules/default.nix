@@ -47,7 +47,6 @@
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-
     zellij = {
       enable = true;
       enableZshIntegration = true;
