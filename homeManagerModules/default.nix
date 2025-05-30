@@ -56,7 +56,7 @@
       };
     };
     ghostty = {
-      enable = true;
+      enable = false;
       enableZshIntegration = true;
       package =
         if pkgs.stdenv.isLinux

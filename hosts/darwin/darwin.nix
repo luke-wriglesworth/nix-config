@@ -7,8 +7,12 @@
   users.users.lukewriglesworth.home = "/Users/lukewriglesworth";
   nix = {
     enable = false;
+    settings = {
+      "extra-experimental-features" = ["nix-command" "flakes"];
+    };
   };
   system.stateVersion = 6;
+  system.primaryUser = "lukewriglesworth";
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
   fonts = {
@@ -29,6 +33,7 @@
     prismlauncher
     ncurses
     coreutils-full
+    ffmpeg
     nixd
     git
     lazygit
