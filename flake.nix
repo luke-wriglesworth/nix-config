@@ -10,7 +10,7 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    nixpkgs.url = "path:/home/luke/nixpkgs";
+    nixpkgs.url = "github:luke-wriglesworth/nixpkgs/master";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/master";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/551e707f257cffeef2c0af17b7e3384478c00ede";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
