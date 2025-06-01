@@ -13,7 +13,7 @@
 
   system.stateVersion = "24.11";
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-rc;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
