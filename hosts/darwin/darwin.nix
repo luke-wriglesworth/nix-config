@@ -29,6 +29,7 @@
 
   environment.systemPackages = with pkgs; [
     bitwarden
+    nix-output-monitor
     utm
     prismlauncher
     ncurses
@@ -55,10 +56,6 @@
       "2606:4700:4700::1111"
       "2606:4700:4700::1001"
     ];
-  };
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
   launchd.user.agents = {
     #yabai.serviceConfig.Label = "com.koekeishiya.yabai";

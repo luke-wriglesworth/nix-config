@@ -20,7 +20,6 @@
   neovim.enable = true;
   zsh.enable = true;
   wezterm.enable = true;
-  stylixConfig.enable = true;
   nixpkgs.config.allowUnfree = true;
 
   programs = {
