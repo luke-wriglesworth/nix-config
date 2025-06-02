@@ -52,8 +52,7 @@
     jellyfin-web
     jellyfin-ffmpeg
     jellyfin-media-player
-    discord
-    #vesktop
+    discord-ptb
     nixd
     nix-index
     distrobox

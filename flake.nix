@@ -62,6 +62,7 @@
     };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nixos-cli.url = "github:nix-community/nixos-cli";
   };
 
   outputs = inputs @ {
@@ -75,6 +76,7 @@
     homebrew-cask,
     nixos-hardware,
     stylix,
+    nixos-cli,
     ...
   }: {
     # System Configurations
@@ -94,7 +96,11 @@
           ./hosts/nixos/packages.nix
           ./nixosModules
           chaotic.nixosModules.default
+          nixos-cli.nixosModules.nixos-cli
+          nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-cpu-amd-zenpower
+          nixos-hardware.nixosModules.common-gpu-amd
           nixos-hardware.nixosModules.common-pc-ssd
         ];
       };

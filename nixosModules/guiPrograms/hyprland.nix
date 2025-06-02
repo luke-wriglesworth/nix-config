@@ -24,6 +24,7 @@ in {
       pkgs.hypridle
       pkgs.hyprpolkitagent
       pkgs.hyprsunset
+      pkgs.kdePackages.qtsvg
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     ];
     nix.settings = {
@@ -34,8 +35,8 @@ in {
       hyprland = {
         enable = true;
         xwayland.enable = true;
-        #package = hyprland-git.hyprland;
-        #portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
+        package = hyprland-git.hyprland;
+        portalPackage = hyprland-git.xdg-desktop-portal-hyprland;
         withUWSM = true;
       };
       dconf.enable = true;

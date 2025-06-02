@@ -25,6 +25,11 @@
       "fs.inotify.max_user_instances" = 1024; # default:   128
       "fs.inotify.max_queued_events" = 32768; # default: 16384
     };
+    tmp = {
+      useTmpfs = true;
+      tmpfsHugeMemoryPages = "within_size";
+      cleanOnBoot = true;
+    };
   };
   nix = {
     registry = {
@@ -66,7 +71,6 @@
     "C.UTF-8/UTF-8"
     "en_US.UTF-8/UTF-8"
   ];
-  zramSwap.enable = true;
   networking = {
     firewall.enable = false;
     resolvconf.enable = false;
@@ -158,6 +162,9 @@
   };
 
   services = {
+    nixos-cli = {
+      enable = true;
+    };
     tika = {
       enable = true;
     };
@@ -186,9 +193,9 @@
       user = "luke";
     };
     ollama = {
-      enable = false;
-      #acceleration = "rocm";
-      #rocmOverrideGfx = "12.0.1";
+      enable = true;
+      acceleration = "rocm";
+      rocmOverrideGfx = "12.0.1";
       openFirewall = true;
       host = "0.0.0.0";
       port = 11434;
@@ -280,6 +287,7 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = [pkgs.rocmPackages.clr.icd];
     };
     amdgpu = {
       opencl.enable = true;

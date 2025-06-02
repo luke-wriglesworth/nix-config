@@ -8,6 +8,7 @@
   hyprpanel.enable = true;
   lan-mouse.enable = false;
   zen-browser.enable = true;
+  stylixConfig.enable = true;
   ########################
 
   home.pointerCursor = lib.mkDefault {

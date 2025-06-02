@@ -141,7 +141,7 @@
           # General
           "$mod, q, exec, uwsm app -- $terminal"
           "$mod, c, killactive"
-          "$mod, e, exec, uwsm app -- ${pkgs.xfce.thunar}/bin/thunar"
+          "$mod, e, exec, uwsm app -- ${pkgs.kdePackages.dolphin}/bin/dolphin"
           "$mod, b, exec, uwsm app -- zen"
           "$mod SHIFT, e, exit"
           "$mod SHIFT, l, exec, uwsm app -- ${pkgs.hyprlock}/bin/hyprlock"
