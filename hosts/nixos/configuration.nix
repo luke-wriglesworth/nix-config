@@ -3,6 +3,8 @@
   inputs,
   lib,
   pkgs-pinned,
+  jovian,
+  proxmox-nixos,
   ...
 }: {
   ## Custom Nix Modules ##
@@ -13,7 +15,7 @@
 
   system.stateVersion = "24.11";
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_cachyos;
     kernelParams = ["amdgpu.ppfeaturemask=0xffffffff"];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "auto";
@@ -64,7 +66,7 @@
 
   time = {
     timeZone = "US/Eastern";
-    #hardwareClockInLocalTime = true;
+    hardwareClockInLocalTime = true;
   };
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.supportedLocales = [
@@ -152,19 +154,46 @@
     TTYVTDisallocate = true;
   };
 
+  hardware = {
+    enableRedistributableFirmware = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = [pkgs.rocmPackages.clr.icd];
+    };
+    amdgpu = {
+      opencl.enable = true;
+      initrd.enable = true;
+    };
+    openrazer.enable = false;
+  };
+
   virtualisation = {
     containers.enable = true;
-    podman = {
+    docker = {
       enable = true;
+      daemon.settings = {
+        experimental = true;
+        default-address-pools = [
+          {
+            base = "172.30.0.0/16";
+            size = 24;
+          }
+        ];
+      };
+    };
+    podman = {
+      enable = false;
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
   };
 
   services = {
-    nixos-cli = {
-      enable = true;
-    };
     tika = {
       enable = true;
     };
@@ -278,28 +307,11 @@
     ];
   };
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = [pkgs.rocmPackages.clr.icd];
-    };
-    amdgpu = {
-      opencl.enable = true;
-      initrd.enable = true;
-    };
-  };
-
   # User Account
   users.users.luke = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = ["networkmanager" "wheel" "video" "render" "docker" "podman"];
+    extraGroups = ["networkmanager" "wheel" "video" "render" "docker" "podman" "libvirtd" "kvm"];
     home = "/home/luke";
   };
 
