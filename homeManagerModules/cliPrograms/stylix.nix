@@ -11,6 +11,7 @@
     stylix = {
       enable = true;
       targets.mako.enable = false;
+      targets.gnome.enable = false;
       autoEnable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
       image = ./nixos.png;

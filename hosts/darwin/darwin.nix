@@ -30,10 +30,16 @@
   environment.systemPackages = with pkgs; [
     bitwarden
     nix-output-monitor
+    git-lfs
+    gcc
     utm
+    szip
     prismlauncher
     ncurses
+    hdf5
     coreutils-full
+    python313Full
+    python313Packages.pip
     ffmpeg
     nixd
     git
